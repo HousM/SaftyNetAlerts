@@ -17,6 +17,7 @@ public class Person {
 
 	// Constructeur par défaut
 	public Person() {
+
 	}
 
 	// Constructeur pour les tests

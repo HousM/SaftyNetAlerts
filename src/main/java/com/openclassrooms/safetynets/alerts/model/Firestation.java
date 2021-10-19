@@ -30,6 +30,7 @@ public class Firestation {
 
 	public void setPersonToSave(List<Person> personToSave) {
 		this.personToSave = personToSave;
+
 	}
 
 	public String getAddress() {
