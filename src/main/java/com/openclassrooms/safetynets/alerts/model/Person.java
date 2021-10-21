@@ -1,9 +1,19 @@
 package com.openclassrooms.safetynets.alerts.model;
 
+import java.util.List;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonFilter;
 
 @JsonFilter("monFiltreDynamique")
 public class Person {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -13,26 +23,48 @@ public class Person {
 	private String email;
 
 	private String birthdate;
-	private Integer age;
+	private long age;
+	@ElementCollection(targetClass = String.class)
+	private List<String> medications;
+	@ElementCollection(targetClass = String.class)
+	private List<String> allergies;
+	@ElementCollection(targetClass = String.class)
+	private List<String> station;
 
-	// Constructeur par défaut
+	// Default constructor
 	public Person() {
-
 	}
 
-	// Constructeur pour les tests
-	public Person(String firstName, String lastName, String address, String city, String zip, String phone,
-			String email, String birthdate, Integer age) {
-		super();
+	// Test for constructor
+	public Person(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.address = address;
-		this.city = city;
-		this.zip = zip;
-		this.phone = phone;
-		this.email = email;
-		this.birthdate = birthdate;
+	}
+
+	public Person(String firstName, String lastName, long age) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.age = age;
+	}
+
+	public Person(String firstName, String lastName, long age, List<String> medications, List<String> allergies) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.age = age;
+		this.medications = medications;
+		this.allergies = allergies;
+	}
+
+	public Person(int id, String firstName, String lastName, String address, String city, String zip, String phone,
+			String mail) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.city = city;
+		this.email = mail;
+		this.zip = zip;
+		this.address = address;
+		this.phone = phone;
 	}
 
 	public String getBirthdate() {
@@ -43,7 +75,7 @@ public class Person {
 		this.birthdate = birthdate;
 	}
 
-	public Integer getAge() {
+	public Long getAge() {
 		return age;
 	}
 

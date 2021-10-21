@@ -10,24 +10,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.safetynets.alerts.model.Medicalrecord;
-import com.openclassrooms.safetynets.alerts.service.MedicalrecordService;
+import com.openclassrooms.safetynets.alerts.model.Firestation;
+import com.openclassrooms.safetynets.alerts.service.FirestationService;
 
 @RestController
-public class MedicalrecordEndpoint {
-	private final Logger logger = LoggerFactory.getLogger(MedicalrecordEndpoint.class);
+public class FirestationController {
+	private final Logger logger = LoggerFactory.getLogger(FirestationController.class);
 
 	@Autowired
-	MedicalrecordService medicalrecordService;
+	FirestationService firestationService;
 
-	@GetMapping(value = "/medicalRecord")
-	public MappingJacksonValue afficherMedicalrecord() throws Exception {
+	@GetMapping(value = "/firestations")
+	public MappingJacksonValue afficherStations() throws Exception {
 		return null;
 
 	}
 
-	@PostMapping(value = "/medicalRecord")
-	public ResponseEntity<Void> addMedicalrecord(@RequestBody Medicalrecord medicalrecord) throws Exception {
+	@PostMapping(value = "/firestation")
+	public ResponseEntity<Void> addFirestation(@RequestBody Firestation firestation) throws Exception {
 		return null;
 
 	}

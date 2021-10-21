@@ -10,27 +10,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.safetynets.alerts.model.Person;
-import com.openclassrooms.safetynets.alerts.service.PersonService;
+import com.openclassrooms.safetynets.alerts.model.Medicalrecord;
+import com.openclassrooms.safetynets.alerts.service.MedicalrecordService;
 
 @RestController
-public class PersonEndpoint {
-	private final Logger logger = LoggerFactory.getLogger(PersonEndpoint.class);
+public class MedicalrecordController {
+	private final Logger logger = LoggerFactory.getLogger(MedicalrecordController.class);
 
 	@Autowired
-	PersonService personService;
+	MedicalrecordService medicalrecordService;
 
-	// Récupérer la liste des personnes
-
-	@GetMapping(value = "/person")
-	public MappingJacksonValue afficherPersons() throws Exception {
+	@GetMapping(value = "/medicalRecord")
+	public MappingJacksonValue afficherMedicalrecord() throws Exception {
 		return null;
 
 	}
 
-	// Ajouter une personne
-	@PostMapping(value = "/person")
-	public ResponseEntity<Void> addPersons(@RequestBody Person person) throws Exception {
+	@PostMapping(value = "/medicalRecord")
+	public ResponseEntity<Void> addMedicalrecord(@RequestBody Medicalrecord medicalrecord) throws Exception {
 		return null;
 
 	}
