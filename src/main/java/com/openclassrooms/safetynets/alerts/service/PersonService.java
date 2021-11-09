@@ -40,6 +40,23 @@ public class PersonService {
 		return personSaved;
 	}
 
+	public Person updatePerson(Person pers) throws Exception {
+		logger.debug("Inside PersonService.updatePerson");
+		Person personFound = personRepository.findByIdentity(pers.getFirstName(), pers.getLastName());
+
+		if (personFound == null) {
+			throw new Exception("Person not found");
+		}
+
+		personFound.setAddress(pers.getAddress());
+		personFound.setCity(pers.getCity());
+		personFound.setZip(pers.getZip());
+		personFound.setPhone(pers.getPhone());
+		personFound.setEmail(pers.getEmail());
+
+		return personFound;
+	}
+
 	/*
 	 * Retrieve the person with the given identity by calling PersonRepository's
 	 */

@@ -30,6 +30,8 @@ public class Person {
 	private List<String> allergies;
 	@ElementCollection(targetClass = String.class)
 	private List<String> station;
+	private List<String> medicationsList;
+	private List<String> allergiesList;
 
 	// Default constructor
 	public Person(String firstName, String lastName, String address, String city, String zip, String phone,
@@ -45,7 +47,7 @@ public class Person {
 
 	}
 
-	// Test for constructor
+	// Tests for constructor
 	public Person(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -65,16 +67,23 @@ public class Person {
 		this.allergies = allergies;
 	}
 
-	public Person(int id, String firstName, String lastName, String address, String city, String zip, String phone,
-			String mail) {
-		this.id = id;
+	public Person(String firstName, String lastName, String address, String phone) {
+
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.city = city;
-		this.email = mail;
-		this.zip = zip;
 		this.address = address;
 		this.phone = phone;
+	}
+
+	public Person(String lastName, String address, int age, String email, List<String> medicationsList,
+			List<String> allergiesList) {
+
+		this.lastName = lastName;
+		this.address = address;
+		this.age = age;
+		this.email = email;
+		this.setMedicationsList(medicationsList);
+		this.setAllergiesList(allergiesList);
 	}
 
 	public String getBirthdate() {
@@ -148,4 +157,21 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public List<String> getMedicationsList() {
+		return medicationsList;
+	}
+
+	public void setMedicationsList(List<String> medicationsList) {
+		this.medicationsList = medicationsList;
+	}
+
+	public List<String> getAllergiesList() {
+		return allergiesList;
+	}
+
+	public void setAllergiesList(List<String> allergiesList) {
+		this.allergiesList = allergiesList;
+	}
+
 }

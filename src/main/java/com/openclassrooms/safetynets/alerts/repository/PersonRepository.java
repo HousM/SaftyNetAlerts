@@ -32,9 +32,9 @@ public class PersonRepository {
 	 */
 
 	@Autowired
-	public PersonRepository(ReadJsonDataPerson ReadJsonData) {
+	public PersonRepository(ReadJsonData dataJson) {
 		logger.debug("Map PersonList");
-		ReadJsonData.getPersonList().forEach(person -> personsMap.put(person.getFirstName()
+		dataJson.getPersonList().forEach(person -> personsMap.put(person.getFirstName()
 				+ person.getLastName(), person));
 	}
 
@@ -99,6 +99,9 @@ public class PersonRepository {
 		return personsMap.get(personFound.getFirstName() + personFound.getLastName());
 	}
 
+	/**
+	 * Deletes the given Person
+	 */
 	public void delete(final Person pers) {
 		logger.debug("Inside PersonRepository.delete for : " + pers.getFirstName(), pers.getLastName());
 		personsMap.remove(pers.getFirstName() + pers.getLastName());
