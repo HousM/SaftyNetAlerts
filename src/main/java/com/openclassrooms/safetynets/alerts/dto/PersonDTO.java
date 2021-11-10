@@ -61,7 +61,7 @@ public class PersonDTO {
 		return person;
 	}
 
-	public void setPerson(final List<Person> person) {
+	public void setPerson(List<Person> person) {
 		this.person = person;
 	}
 
@@ -77,7 +77,7 @@ public class PersonDTO {
 		return childNumber;
 	}
 
-	public void setChildNumber(final int childNumber) {
+	public void setChildNumber(int childNumber) {
 		this.childNumber = childNumber;
 	}
 

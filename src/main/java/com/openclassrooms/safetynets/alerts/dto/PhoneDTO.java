@@ -31,7 +31,7 @@ public class PhoneDTO {
 	/**
 	 * Setter of PhoneDTO
 	 */
-	public void setPhones(final List<String> phones) {
+	public void setPhones(List<String> phones) {
 		this.phones = phones;
 	}
 }

@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 
 public class AgeCalcul {
 
-	private final Logger logger = LoggerFactory.getLogger(AgeCalcul.class);
+	private Logger logger = LoggerFactory.getLogger(AgeCalcul.class);
 
-	public int getAge(final LocalDate birthdate) {
+	public int getAge(LocalDate birthdate) {
 
 		LocalDate currentDate = LocalDate.now();
 		int age = Period.between(birthdate, currentDate).getYears();

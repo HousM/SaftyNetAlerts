@@ -18,19 +18,10 @@ import com.openclassrooms.safetynets.alerts.service.AlertsService;
 
 public class AlertsController {
 
-	private final Logger logger = LoggerFactory.getLogger(AlertsController.class);
+	private Logger logger = LoggerFactory.getLogger(AlertsController.class);
 
-	private final AlertsService alertsService;
-
-	/**
-	 * Constructor of class AlertsController. Initialize alertsService.
-	 *
-	 * @param alertsService IAlertsService's implement class reference.
-	 */
 	@Autowired
-	public AlertsController(AlertsService alertsService) {
-		this.alertsService = alertsService;
-	}
+	AlertsService alertsService;
 
 	@GetMapping("/firestation")
 	public ResponseEntity<PersonDTO> getPersonsByStation(@RequestParam("stationNumber") Integer station)
@@ -92,7 +83,7 @@ public class AlertsController {
 
 	@GetMapping("/personInfo")
 	public ResponseEntity<PersonDTO> getPersonInfoByIdentity(@RequestParam("firstName") String firstName,
-			@RequestParam("lastName") final String lastName) throws Exception {
+			@RequestParam("lastName") String lastName) throws Exception {
 
 		logger.debug("GET Request on /personInfo with firstName {} and lastName {}", firstName, lastName);
 

@@ -14,18 +14,14 @@ public class PersonService {
 	/**
 	 * PersonService logger.
 	 */
-	private final Logger logger = LoggerFactory.getLogger(PersonService.class);
+	private Logger logger = LoggerFactory.getLogger(PersonService.class);
 
 	/**
 	 * Instance
 	 */
-	private final PersonRepository personRepository;
 
 	@Autowired
-	public PersonService(final PersonRepository personRepository) {
-		this.personRepository = personRepository;
-
-	}
+	PersonRepository personRepository;
 
 	public Person createPerson(Person pers) throws Exception {
 		logger.debug("Inside PersonService.createPerson");

@@ -14,11 +14,11 @@ public class MedicalRecordRepository {
 	 * PersonRepository logger.
 	 */
 
-	private final Logger logger = LoggerFactory.getLogger(MedicalRecordRepository.class);
-	private final Map<String, MedicalRecord> medicalRecordsMap = new HashMap<>();
+	private Logger logger = LoggerFactory.getLogger(MedicalRecordRepository.class);
+	private Map<String, MedicalRecord> medicalRecordsMap = new HashMap<>();
 
 	@Autowired
-	public MedicalRecordRepository(final ReadJsonData dataJson) {
+	public MedicalRecordRepository(ReadJsonData dataJson) {
 		logger.debug("Map MedicalRecordList");
 		dataJson.getMedicalRecordList().forEach(med -> medicalRecordsMap.put(med.getFirstName()
 				+ med.getLastName(), med));

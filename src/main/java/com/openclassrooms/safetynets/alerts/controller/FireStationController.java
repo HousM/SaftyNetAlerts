@@ -18,21 +18,17 @@ import com.openclassrooms.safetynets.alerts.service.FireStationService;
 
 @RestController
 public class FireStationController {
-	private final Logger logger = LoggerFactory.getLogger(FireStationController.class);
+	private Logger logger = LoggerFactory.getLogger(FireStationController.class);
 
 	/**
 	 * FireStationService's implement class reference.
 	 */
-	private final FireStationService fireStationService;
-
 	@Autowired
-	public FireStationController(FireStationService fireStationService) {
-		this.fireStationService = fireStationService;
-	}
+	FireStationService fireStationService;
 
 	@GetMapping("/fireStation")
 	public ResponseEntity<FireStation> getFireStation(@RequestParam("address") String address,
-			@RequestParam("station") final Integer station) throws Exception {
+			@RequestParam("station") Integer station) throws Exception {
 		logger.debug("FireStation GET Request on : {} {}", address, station);
 
 		if (address == null || address.trim().length() == 0 || station == null) {
@@ -74,7 +70,7 @@ public class FireStationController {
 
 	@DeleteMapping("/firestation")
 	public ResponseEntity<Void> deleteFireStation(@RequestParam("address") String address,
-			@RequestParam("station") final Integer station) throws Exception {
+			@RequestParam("station") Integer station) throws Exception {
 		logger.debug("FireStation DELETE Request on : {} {}", address, station);
 
 		if (address == null || address.trim().length() == 0 || station == null) {

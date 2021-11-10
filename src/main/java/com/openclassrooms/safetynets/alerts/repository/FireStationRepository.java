@@ -13,14 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
 
 public class FireStationRepository {
-	private final Logger logger = LoggerFactory.getLogger(FireStationRepository.class);
+	private Logger logger = LoggerFactory.getLogger(FireStationRepository.class);
 	/**
 	 * Creates a HashMap instance to map FireStations data.
 	 */
-	private final Map<String, FireStation> fireStationMap = new HashMap<>();
+	private Map<String, FireStation> fireStationMap = new HashMap<>();
 
 	@Autowired
-	public FireStationRepository(final ReadJsonData dataJson) {
+	public FireStationRepository(ReadJsonData dataJson) {
 		logger.debug("Map FireStationList");
 		dataJson.getFireStationList().forEach(fireS -> fireStationMap.put(fireS.getAddress() + fireS.getStation(),
 				fireS));

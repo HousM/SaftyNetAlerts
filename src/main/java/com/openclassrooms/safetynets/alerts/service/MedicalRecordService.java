@@ -12,21 +12,16 @@ public class MedicalRecordService {
 	/**
 	 * PersonRepository logger.
 	 */
-
-	private final Logger logger = LoggerFactory.getLogger(MedicalRecordService.class);
+	private Logger logger = LoggerFactory.getLogger(MedicalRecordService.class);
 
 	/**
 	 * MedicalRecordRepository instance.
 	 */
-	private final MedicalRecordRepository medicalRecordRepository;
 
 	@Autowired
-	public MedicalRecordService(final MedicalRecordRepository medicalRecordRepository) {
-		this.medicalRecordRepository = medicalRecordRepository;
+	MedicalRecordRepository medicalRecordRepository;
 
-	}
-
-	public MedicalRecord createMedicalRecord(final MedicalRecord med) throws Exception {
+	public MedicalRecord createMedicalRecord(MedicalRecord med) throws Exception {
 		logger.debug("Inside MedicalRecordService.createMedicalRecord for: " + med.getFirstName(), med.getLastName());
 
 		MedicalRecord medFound = medicalRecordRepository.findByIdentity(med.getFirstName(),
@@ -41,7 +36,7 @@ public class MedicalRecordService {
 		return medSaved;
 	}
 
-	public MedicalRecord updateMedicalRecord(final MedicalRecord med) throws Exception {
+	public MedicalRecord updateMedicalRecord(MedicalRecord med) throws Exception {
 		logger.debug("Inside MedicalRecordService.updateMedicalRecord for: " + med.getFirstName(), med.getLastName());
 		MedicalRecord medFound = medicalRecordRepository.findByIdentity(med.getFirstName(),
 				med.getLastName());

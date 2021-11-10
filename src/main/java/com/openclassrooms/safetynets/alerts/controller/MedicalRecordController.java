@@ -22,22 +22,18 @@ public class MedicalRecordController {
 	/**
 	 * MedicalRecordController logger.
 	 */
-	private final Logger logger = LoggerFactory.getLogger(MedicalRecordController.class);
-
-	private MedicalRecordService medicalRecordService;
+	private Logger logger = LoggerFactory.getLogger(MedicalRecordController.class);
 
 	@Autowired
-	public MedicalRecordController(final MedicalRecordService medicalRecordService) {
-		this.medicalRecordService = medicalRecordService;
-	}
+	MedicalRecordService medicalRecordService;
 
 	/**
 	 * Retrieve stored medicalRecord.
 	 */
 
 	@GetMapping("/medicalRecord")
-	public ResponseEntity<MedicalRecord> getMedicalRecord(@RequestParam("firstName") final String firstName,
-			@RequestParam("lastName") final String lastName) throws Exception {
+	public ResponseEntity<MedicalRecord> getMedicalRecord(@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName) throws Exception {
 		logger.debug("MedicalRecord GET Request on : {} {}", firstName, lastName);
 
 		if (firstName == null || firstName.trim().length() == 0 || lastName == null
@@ -54,7 +50,7 @@ public class MedicalRecordController {
 	 * Adds a new medicalRecord.
 	 */
 	@PostMapping("/medicalRecord")
-	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody final MedicalRecord med) throws Exception {
+	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord med) throws Exception {
 		logger.debug("MedicalRecord POST Request on : " + med.getFirstName() + " " + med.getLastName());
 
 		if (med.getFirstName() == null || med.getFirstName().isEmpty() || med.getLastName() == null ||
@@ -72,7 +68,7 @@ public class MedicalRecordController {
 	 */
 
 	@PutMapping("/medicalRecord")
-	public ResponseEntity<MedicalRecord> updateMedicalRecord(@RequestBody final MedicalRecord med) throws Exception {
+	public ResponseEntity<MedicalRecord> updateMedicalRecord(@RequestBody MedicalRecord med) throws Exception {
 		logger.debug("MedicalRecord PUT Request on : " + med.getFirstName() + " " + med.getLastName());
 
 		if (med.getFirstName() == null || med.getFirstName().isEmpty() || med.getLastName() == null ||
@@ -89,8 +85,8 @@ public class MedicalRecordController {
 	 * Delete stored medicalRecord.
 	 */
 	@DeleteMapping("/medicalRecord")
-	public ResponseEntity<Void> deleteMedicalRecord(@RequestParam("firstName") final String firstName,
-			@RequestParam("lastName") final String lastName) throws Exception {
+	public ResponseEntity<Void> deleteMedicalRecord(@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") String lastName) throws Exception {
 		logger.debug("MedicalRecord DELETE Request on : " + firstName + " " + lastName);
 
 		if (firstName == null || firstName.trim().length() == 0 || lastName == null

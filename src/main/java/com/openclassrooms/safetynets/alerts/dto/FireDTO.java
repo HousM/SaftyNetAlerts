@@ -20,7 +20,7 @@ public class FireDTO {
 	 * Constructor of class FireDTO.
 	 *
 	 */
-	public FireDTO(final int station, final List<Person> persons) {
+	public FireDTO(int station, List<Person> persons) {
 		this.station = station;
 		this.persons = persons;
 	}

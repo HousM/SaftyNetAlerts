@@ -17,17 +17,13 @@ public class FireStationService {
 	/**
 	 * PersonService logger.
 	 */
-	private final Logger logger = LoggerFactory.getLogger(FireStationService.class);
+	private Logger logger = LoggerFactory.getLogger(FireStationService.class);
 
 	/**
 	 * FireStationRepository instance.
 	 */
-	private final FireStationRepository fireStationRepository;
-
 	@Autowired
-	public FireStationService(final FireStationRepository fireStationRepository) {
-		this.fireStationRepository = fireStationRepository;
-	}
+	FireStationRepository fireStationRepository;
 
 	public FireStation createFireStation(FireStation fireSt) throws Exception {
 		logger.debug("Inside FireStationService.createFireStation");

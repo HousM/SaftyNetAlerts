@@ -23,13 +23,13 @@ public class ReadJsonData {
 
 	private List<Person> personList = new ArrayList<>();
 	private List<FireStation> fireStationList = new ArrayList<>();
-	private final List<MedicalRecord> medicalRecordList = new ArrayList<>();
+	private List<MedicalRecord> medicalRecordList = new ArrayList<>();
 
 	/**
 	 * Logger
 	 */
 
-	private static final Logger logger = LoggerFactory.getLogger(ReadJsonData.class);
+	private Logger logger = LoggerFactory.getLogger(ReadJsonData.class);
 
 	/**
 	 * Json data Load

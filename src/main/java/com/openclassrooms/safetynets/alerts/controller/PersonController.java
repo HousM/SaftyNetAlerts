@@ -15,7 +15,7 @@ import com.openclassrooms.safetynets.alerts.service.PersonService;
 
 @RestController
 public class PersonController {
-	private final Logger logger = LoggerFactory.getLogger(PersonController.class);
+	private Logger logger = LoggerFactory.getLogger(PersonController.class);
 
 	@Autowired
 	PersonService personService;

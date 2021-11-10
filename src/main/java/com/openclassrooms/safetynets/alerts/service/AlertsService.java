@@ -19,38 +19,33 @@ import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 
 public class AlertsService {
-	private final Logger logger = LoggerFactory.getLogger(AlertsService.class);
+	private Logger logger = LoggerFactory.getLogger(AlertsService.class);
 
 	/**
 	 * PersonService's class reference.
 	 */
-	private final PersonService personService;
+	@Autowired
+	PersonService personService;
 
 	/**
 	 * FireStationService's class reference.
 	 */
-	private final FireStationService fireStationService;
-
-	/**
-	 * IMedicalRecordService's class reference.
-	 */
-	private final MedicalRecordService medicalRecordService;
-
-	/**
-	 * AgeCalculator instance.
-	 */
-	private final AgeCalcul ageCalcul;
-
-	private static final int MAX_AGE_FOR_CHILD_ALERT = 18;
-
 	@Autowired
-	public AlertsService(PersonService personService, FireStationService fireStationService,
-			final MedicalRecordService medicalRecordService, AgeCalcul ageCalcul) {
-		this.personService = personService;
-		this.fireStationService = fireStationService;
-		this.medicalRecordService = medicalRecordService;
-		this.ageCalcul = ageCalcul;
-	}
+	FireStationService fireStationService;
+
+	/**
+	 * MedicalRecordService's class reference.
+	 */
+	@Autowired
+	MedicalRecordService medicalRecordService;
+
+	/**
+	 * AgeCalcul instance.
+	 */
+	@Autowired
+	AgeCalcul ageCalcul;
+
+	private int MAX_AGE_FOR_CHILD_ALERT = 18;
 
 	public PersonDTO getPersonsByStation(int station) throws Exception {
 		logger.debug("Inside AlertsService.getPersonsByStation for station number : " + station);

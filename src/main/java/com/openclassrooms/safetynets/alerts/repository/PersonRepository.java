@@ -20,12 +20,12 @@ public class PersonRepository {
 	 * PersonRepository logger.
 	 */
 
-	private final Logger logger = LoggerFactory.getLogger(PersonRepository.class);
+	private Logger logger = LoggerFactory.getLogger(PersonRepository.class);
 
 	/**
 	 * HashMap instance for map Persons data.
 	 */
-	private final Map<String, Person> personsMap = new HashMap<>();
+	private Map<String, Person> personsMap = new HashMap<>();
 
 	/**
 	 * Constructor of class PersonRepository.
@@ -102,7 +102,7 @@ public class PersonRepository {
 	/**
 	 * Deletes the given Person
 	 */
-	public void delete(final Person pers) {
+	public void delete(Person pers) {
 		logger.debug("Inside PersonRepository.delete for : " + pers.getFirstName(), pers.getLastName());
 		personsMap.remove(pers.getFirstName() + pers.getLastName());
 	}
