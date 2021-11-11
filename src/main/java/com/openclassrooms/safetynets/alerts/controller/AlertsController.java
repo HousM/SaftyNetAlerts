@@ -24,6 +24,7 @@ public class AlertsController {
 	AlertsService alertsService;
 
 	@GetMapping("/firestation")
+
 	public ResponseEntity<PersonDTO> getPersonsByStation(@RequestParam("stationNumber") Integer station)
 			throws Exception {
 		logger.debug("GET Request on /firestation with station number {}", station);
