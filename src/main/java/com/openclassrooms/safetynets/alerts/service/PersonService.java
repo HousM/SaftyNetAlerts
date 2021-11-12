@@ -5,10 +5,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.repository.PersonRepository;
 
+@Service
 public class PersonService {
 
 	/**
@@ -21,7 +23,7 @@ public class PersonService {
 	 */
 
 	@Autowired
-	PersonRepository personRepository;
+	private PersonRepository personRepository;
 
 	public Person createPerson(Person pers) throws Exception {
 		logger.debug("Inside PersonService.createPerson");

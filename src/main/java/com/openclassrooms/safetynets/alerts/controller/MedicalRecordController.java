@@ -25,7 +25,7 @@ public class MedicalRecordController {
 	private Logger logger = LoggerFactory.getLogger(MedicalRecordController.class);
 
 	@Autowired
-	MedicalRecordService medicalRecordService;
+	private MedicalRecordService medicalRecordService;
 
 	/**
 	 * Retrieve stored medicalRecord.

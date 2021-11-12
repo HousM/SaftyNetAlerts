@@ -3,10 +3,12 @@ package com.openclassrooms.safetynets.alerts.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.repository.MedicalRecordRepository;
 
+@Service
 public class MedicalRecordService {
 
 	/**
@@ -19,7 +21,7 @@ public class MedicalRecordService {
 	 */
 
 	@Autowired
-	MedicalRecordRepository medicalRecordRepository;
+	private MedicalRecordRepository medicalRecordRepository;
 
 	public MedicalRecord createMedicalRecord(MedicalRecord med) throws Exception {
 		logger.debug("Inside MedicalRecordService.createMedicalRecord for: " + med.getFirstName(), med.getLastName());

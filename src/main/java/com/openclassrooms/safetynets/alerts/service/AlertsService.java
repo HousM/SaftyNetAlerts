@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.dto.FloodDTO;
@@ -18,32 +19,25 @@ import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 
+@Service
 public class AlertsService {
 	private Logger logger = LoggerFactory.getLogger(AlertsService.class);
 
-	/**
-	 * PersonService's class reference.
-	 */
+	/*** PersonService's class reference. */
 	@Autowired
-	PersonService personService;
+	private PersonService personService;
 
-	/**
-	 * FireStationService's class reference.
-	 */
+	/*** FireStationService's class reference. */
 	@Autowired
-	FireStationService fireStationService;
+	private FireStationService fireStationService;
 
-	/**
-	 * MedicalRecordService's class reference.
-	 */
+	/*** MedicalRecordService's class reference. */
 	@Autowired
-	MedicalRecordService medicalRecordService;
+	private MedicalRecordService medicalRecordService;
 
-	/**
-	 * AgeCalcul instance.
-	 */
+	/*** AgeCalcul instance. */
 	@Autowired
-	AgeCalcul ageCalcul;
+	private AgeCalcul ageCalcul;
 
 	private int MAX_AGE_FOR_CHILD_ALERT = 18;
 

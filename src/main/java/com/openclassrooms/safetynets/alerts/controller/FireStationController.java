@@ -24,7 +24,7 @@ public class FireStationController {
 	 * FireStationService's implement class reference.
 	 */
 	@Autowired
-	FireStationService fireStationService;
+	private FireStationService fireStationService;
 
 	@GetMapping("/fireStation")
 	public ResponseEntity<FireStation> getFireStation(@RequestParam("address") String address,

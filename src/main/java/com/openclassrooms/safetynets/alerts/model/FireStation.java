@@ -13,9 +13,7 @@ public class FireStation {
 	private List<Person> personAddress;
 	private List<FireStation> households;
 
-	public FireStation() {
-	}
-
+	// Default constructor
 	public FireStation(String address, int station) {
 		super();
 		this.address = address;

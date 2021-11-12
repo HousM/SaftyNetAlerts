@@ -21,7 +21,7 @@ public class AlertsController {
 	private Logger logger = LoggerFactory.getLogger(AlertsController.class);
 
 	@Autowired
-	AlertsService alertsService;
+	private AlertsService alertsService;
 
 	@GetMapping("/firestation")
 

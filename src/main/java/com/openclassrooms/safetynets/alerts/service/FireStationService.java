@@ -6,12 +6,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import com.openclassrooms.safetynets.alerts.model.FireStation;
 import com.openclassrooms.safetynets.alerts.repository.FireStationRepository;
 
-@RestController
+@Service
 public class FireStationService {
 
 	/**
@@ -23,7 +23,7 @@ public class FireStationService {
 	 * FireStationRepository instance.
 	 */
 	@Autowired
-	FireStationRepository fireStationRepository;
+	private FireStationRepository fireStationRepository;
 
 	public FireStation createFireStation(FireStation fireSt) throws Exception {
 		logger.debug("Inside FireStationService.createFireStation");

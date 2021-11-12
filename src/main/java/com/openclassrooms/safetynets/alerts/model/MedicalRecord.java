@@ -14,6 +14,7 @@ public class MedicalRecord {
 	private List<String> medicationsList = new ArrayList<String>();
 	private List<String> allergiesList = new ArrayList<String>();
 
+	// Default constructor
 	public MedicalRecord(String firstName, String lastName, String birthdate, List<String> medicationsList,
 			List<String> allergiesList) {
 		this.firstName = firstName;

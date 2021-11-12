@@ -18,7 +18,7 @@ public class PersonController {
 	private Logger logger = LoggerFactory.getLogger(PersonController.class);
 
 	@Autowired
-	PersonService personService;
+	private PersonService personService;
 
 	// Persons list
 	@GetMapping("/listPersons")
