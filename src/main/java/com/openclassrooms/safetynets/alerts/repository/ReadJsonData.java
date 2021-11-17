@@ -55,7 +55,7 @@ public class ReadJsonData {
 						node.get("lastName").asText(),
 						node.get("address").asText(),
 						node.get("city").asText(),
-						node.get("zip").asText(),
+						node.get("zip").asInt(),
 						node.get("phone").asText(),
 						node.get("email").asText());
 
