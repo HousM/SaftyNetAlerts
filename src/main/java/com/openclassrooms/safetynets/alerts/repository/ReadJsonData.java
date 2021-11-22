@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class ReadJsonData {
 	 * Logger
 	 */
 
-	private Logger logger = LoggerFactory.getLogger(ReadJsonData.class);
+	private Logger logger = LogManager.getLogger(ReadJsonData.class);
 
 	/**
 	 * Json data Load

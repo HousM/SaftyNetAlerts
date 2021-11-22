@@ -6,10 +6,10 @@ import static org.mockito.Mockito.when;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import com.openclassrooms.safetynets.alerts.model.Person;
@@ -25,12 +25,11 @@ public class RepositoryTest {
 	private static Person person1;
 	private static Person person2;
 
-	@BeforeEach
+	@Before
 	public void setUp() {
-		person1 = new Person("John", "Boyd", "1509 Culver St", "Culver",
-				97451, "841-874-6512", "jaboyd@email.com");
-		person2 = new Person("Mark", "Boyd", "1509 Culver St", "Culver",
-				97451, "898-353-6978", "maboyd@email.com");
+		person1 = new Person("John", "Boyd", "1509 Culver St", "Culver", 97451, "841-874-6512", "jaboyd@email.com");
+		person2 = new Person("Mark", "Boyd", "1509 Culver St", "Culver", 97451,
+				"898-353-6978", "maboyd@email.com");
 
 		when(dataJson.getPersonList()).thenReturn(Arrays.asList(person1, person2));
 
@@ -50,8 +49,8 @@ public class RepositoryTest {
 	@Tag("Save")
 	@DisplayName("Given a Person, when save, then Person should be saved successfully")
 	public void givenAPerson_whenSave_thenPersonShouldBeSaveCorrectly() {
-		Person person3 = new Person("Andy", "Cooper", "112 Steppes Pl", "Culver",
-				97451, "833-855-6860", "acoop@ymail.com");
+		Person person3 = new Person("Martin", "Bernard", "112 Rue de Paris", "Paris",
+				75001, "0033-666-6860", "mbernard@ymail.fr");
 
 		Person personSaved = personRepository.save(person3);
 

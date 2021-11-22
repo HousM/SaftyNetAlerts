@@ -5,8 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 
 @Service
 public class AlertsService {
-	private Logger logger = LoggerFactory.getLogger(AlertsService.class);
+	private Logger logger = LogManager.getLogger(AlertsService.class);
 
 	/*** PersonService's class reference. */
 	@Autowired

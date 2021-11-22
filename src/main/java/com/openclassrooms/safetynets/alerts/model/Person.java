@@ -2,18 +2,11 @@ package com.openclassrooms.safetynets.alerts.model;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import com.fasterxml.jackson.annotation.JsonFilter;
 
 @JsonFilter("monFiltreDynamique")
 public class Person {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+
 	private String firstName;
 	private String lastName;
 	private String address;
@@ -24,12 +17,7 @@ public class Person {
 
 	private String birthdate;
 	private long age;
-	@ElementCollection(targetClass = String.class)
-	private List<String> medications;
-	@ElementCollection(targetClass = String.class)
-	private List<String> allergies;
-	@ElementCollection(targetClass = String.class)
-	private List<String> station;
+
 	private List<String> medicationsList;
 	private List<String> allergiesList;
 
@@ -59,14 +47,6 @@ public class Person {
 		this.age = age;
 	}
 
-	public Person(String firstName, String lastName, long age, List<String> medications, List<String> allergies) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
-		this.medications = medications;
-		this.allergies = allergies;
-	}
-
 	public Person(String firstName, String lastName, String address, String phone) {
 
 		this.firstName = firstName;
@@ -84,6 +64,15 @@ public class Person {
 		this.email = email;
 		this.setMedicationsList(medicationsList);
 		this.setAllergiesList(allergiesList);
+	}
+
+	public Person(String lastName, String phone, int age, List<String> medicationsList,
+			List<String> allergiesList) {
+		this.lastName = lastName;
+		this.phone = phone;
+		this.age = age;
+		this.medicationsList = medicationsList;
+		this.allergiesList = allergiesList;
 	}
 
 	public String getBirthdate() {
