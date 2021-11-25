@@ -48,7 +48,7 @@ public class FireStationService {
 
 		fireToUpdate.setStation(fireSt.getStation());
 
-		return fireToUpdate;
+		return updateFireStation(fireToUpdate);
 	}
 
 	public void deleteFireStation(String address, Integer station) throws Exception {

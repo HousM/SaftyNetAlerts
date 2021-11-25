@@ -52,7 +52,8 @@ public class PersonService {
 		personFound.setPhone(pers.getPhone());
 		personFound.setEmail(pers.getEmail());
 
-		return personFound;
+		Person personSaved = personRepository.save(personFound);
+		return personSaved;
 	}
 
 	/*

@@ -16,6 +16,8 @@ public class FireDTO {
 	 */
 	private List<Person> persons;
 
+	private String address;
+
 	/**
 	 * Constructor of class FireDTO.
 	 *
@@ -23,6 +25,12 @@ public class FireDTO {
 	public FireDTO(int station, List<Person> persons) {
 		this.station = station;
 		this.persons = persons;
+	}
+
+	public FireDTO(String address, int station) {
+
+		this.setAddress(address);
+		this.station = station;
 	}
 
 	/**
@@ -61,6 +69,14 @@ public class FireDTO {
 	 */
 	public void setPersons(List<Person> persons) {
 		this.persons = persons;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 }

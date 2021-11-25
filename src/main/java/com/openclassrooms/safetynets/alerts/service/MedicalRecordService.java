@@ -50,7 +50,7 @@ public class MedicalRecordService {
 		medFound.setMedicationsList(med.getMedicationsList());
 		medFound.setAllergiesList(med.getAllergiesList());
 
-		return medFound;
+		return updateMedicalRecord(medFound);
 	}
 
 	public void deleteMedicalRecord(String firstName, String lastName) throws Exception {
