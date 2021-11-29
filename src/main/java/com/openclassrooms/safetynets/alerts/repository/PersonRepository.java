@@ -20,12 +20,12 @@ public class PersonRepository {
 	 * PersonRepository logger.
 	 */
 
-	private Logger logger = LogManager.getLogger(PersonRepository.class);
+	Logger logger = LogManager.getLogger(PersonRepository.class);
 
 	/**
 	 * HashMap instance for map Persons data.
 	 */
-	private Map<String, Person> personsMap = new HashMap<>();
+	public Map<String, Person> personsMap = new HashMap<>();
 
 	/**
 	 * Constructor of class PersonRepository.

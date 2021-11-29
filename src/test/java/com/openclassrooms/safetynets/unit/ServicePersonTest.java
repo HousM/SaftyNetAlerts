@@ -3,6 +3,7 @@ package com.openclassrooms.safetynets.unit;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -54,8 +55,8 @@ public class ServicePersonTest {
 	@Tag("CreatePerson")
 	@DisplayName("If person is not registered, when createPerson, then person should be saved correctly")
 	public void givenAnUnRegisteredPerson_whenCreatePerson_thenPersonShouldBeSavedCorrectly() throws Exception {
-		when(personRepositoryMock.findByIdentity(toString(), toString())).thenReturn(null);
-		when(personRepository.findByIdentity("John", "Boyd")).thenReturn(person1);
+		when(personRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(null);
+		// when(personRepository.findByIdentity("John", "Boyd")).thenReturn(person1);
 		when(personRepositoryMock.save(person1)).thenReturn(person1);
 
 		Person personSaved = personService.createPerson(person);
@@ -63,7 +64,7 @@ public class ServicePersonTest {
 		assertNotNull(personSaved);
 		assertThat(personSaved).isEqualTo(person1);
 
-		verify(personRepositoryMock).findByIdentity(toString(), toString());
+		verify(personRepositoryMock).findByIdentity(anyString(), anyString());
 		verify(personRepository.findByIdentity(personSaved.getFirstName(), personSaved.getLastName()));
 		verify(personRepositoryMock).save(any(Person.class));
 	}
@@ -74,12 +75,13 @@ public class ServicePersonTest {
 	public void givenAPerson_whenUpdatePerson_thenPersonShouldBeUpdateCorrectly() throws Exception {
 		person = new Person("John", "Boyd", "892 Downing Ct", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
-		when(personRepositoryMock.findByIdentity(toString(), toString())).thenReturn(person1);
+		when(personRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(person);
+		when(personRepository.findByIdentity("John", "Boyd")).thenReturn(person);
 
 		Person personUpdated = personService.updatePerson(person);
 
 		assertThat(personUpdated).isEqualTo(person);
-		verify(personRepositoryMock).findByIdentity(toString(), toString());
+		verify(personRepositoryMock).findByIdentity(anyString(), anyString());
 
 	}
 
@@ -87,11 +89,11 @@ public class ServicePersonTest {
 	@Tag("DeletePerson")
 	@DisplayName("Given person Id, when deletePerson, then delete process should be done in correct order")
 	public void givenAPersonId_whenDeletePerson_thenDeletingShouldBeDoneInCorrectOrder() throws Exception {
-		when(personRepositoryMock.findByIdentity(toString(), toString())).thenReturn(person1);
+		when(personRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(person1);
 
 		personService.deletePerson(person1.getFirstName(), person1.getLastName());
 
-		verify(personRepositoryMock).findByIdentity(toString(), toString());
+		verify(personRepositoryMock).findByIdentity(anyString(), anyString());
 		verify(personRepositoryMock).delete(any(Person.class));
 	}
 
@@ -113,12 +115,12 @@ public class ServicePersonTest {
 			"returned correctly")
 	public void givenPersonsByCityList_whenGetPersonsByCity_thenPersonsByCityListShouldBeReturnCorrectly()
 			throws Exception {
-		when(personRepositoryMock.findByCity(toString())).thenReturn(personList);
+		when(personRepositoryMock.findByCity(anyString())).thenReturn(personList);
 
-		List<Person> personsByCity = personService.getPersonsByCity(toString());
+		List<Person> personsByCity = personService.getPersonsByCity(anyString());
 
 		assertThat(personsByCity).isEqualTo(personList);
-		verify(personRepositoryMock).findByCity(toString());
+		verify(personRepositoryMock).findByCity(anyString());
 	}
 
 	@Test
@@ -128,25 +130,25 @@ public class ServicePersonTest {
 	public void givenPersonsByAddressList_whenGetPersonsByAddress_thenPersonsByAddressListShouldBeReturnCorrectly()
 			throws Exception {
 		List<Person> personsByAddressExpected = Arrays.asList(person2, person3);
-		when(personRepositoryMock.findByAddress(toString())).thenReturn(personsByAddressExpected);
+		when(personRepositoryMock.findByAddress(anyString())).thenReturn(personsByAddressExpected);
 
-		List<Person> personsByAddress = personService.getPersonsByAddress(toString());
+		List<Person> personsByAddress = personService.getPersonsByAddress(anyString());
 
 		assertThat(personsByAddress).isEqualTo(personsByAddressExpected);
-		verify(personRepositoryMock).findByAddress(toString());
+		verify(personRepositoryMock).findByAddress(anyString());
 	}
 
 	@Test
 	@Tag("GetPersonsById")
 	@DisplayName("Given a Person id, when getPersonsById, then expected person should be returned correctly")
 	public void givenAPersonId_whenGetPersonsById_thenExpectedPersonShouldBeReturnCorrectly() throws Exception {
-		when(personRepositoryMock.findByIdentity(toString(), toString())).thenReturn(person1);
+		when(personRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(person1);
 
 		Person personById = personService.getPersonById(person1.getFirstName(), person1.getLastName());
 
-		assertThat(personById).isEqualTo(person);
+		assertThat(personById).isEqualTo(person1);
 
-		verify(personRepositoryMock).findByIdentity(toString(), toString());
+		verify(personRepositoryMock).findByIdentity(anyString(), anyString());
 
 	}
 

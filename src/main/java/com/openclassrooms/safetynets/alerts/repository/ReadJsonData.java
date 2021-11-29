@@ -1,5 +1,6 @@
 package com.openclassrooms.safetynets.alerts.repository;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -41,12 +42,13 @@ public class ReadJsonData {
 	@PostConstruct
 	public void loadFile() throws Exception {
 
-		logger.debug("Inside DataStore.loadData() method");
+		logger.debug("Inside ReadJsonData.loadData() method");
 
 		ObjectMapper mapper = new ObjectMapper();
+		File filData = new File("data.json");
 
 		try (InputStream fileInputStream = new FileInputStream(dataFilePath)) {
-			JsonNode dataRead = mapper.readTree(fileInputStream);
+			JsonNode dataRead = mapper.readTree(filData);
 
 			// Stores each person into personList
 			JsonNode persons = dataRead.at("/persons");

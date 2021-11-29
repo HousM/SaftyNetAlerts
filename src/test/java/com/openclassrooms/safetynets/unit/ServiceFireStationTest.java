@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -54,7 +55,7 @@ public class ServiceFireStationTest {
 	@Tag("CreateFireStation")
 	@DisplayName("Given a FireStation, when createFireStation, then FireStation should be saved successfully")
 	public void givenAFireStation_whenCreateFireStation_thenFireStationShouldBeSavedCorrectly() throws Exception {
-		when(fireStationRepositoryMock.find(toString(), anyInt())).thenReturn(null);
+		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(null);
 		when(fireStationRepository.find("29 15th St", 2)).thenReturn(fire1);
 		when(fireStationRepositoryMock.save(any(FireStation.class))).thenReturn(fire1);
 
@@ -63,7 +64,7 @@ public class ServiceFireStationTest {
 		assertNotNull(fireCreated);
 		assertThat(fireCreated).isEqualTo(fire1);
 
-		verify(fireStationRepositoryMock).find(toString(), anyInt());
+		verify(fireStationRepositoryMock).find(anyString(), anyInt());
 		verify(fireStationRepository.find(fireCreated.getAddress(), fireCreated.getStation()));
 		verify(fireStationRepositoryMock).save(any(FireStation.class));
 
@@ -76,13 +77,13 @@ public class ServiceFireStationTest {
 	public void givenARegisteredFireStation_whenUpdateFireStation_thenFireStationShouldBeUpdatedCorrectly()
 			throws Exception {
 		new FireStation("29 15th St", 1);
-		when(fireStationRepositoryMock.findByAddress(toString())).thenReturn(fire1);
+		when(fireStationRepositoryMock.findByAddress(anyString())).thenReturn(fire1);
 
 		FireStation fireUpdated = fireStationService.updateFireStation(fire);
 
 		assertThat(fireUpdated.getStation()).isEqualTo(1);
 
-		verify(fireStationRepositoryMock).findByAddress(toString());
+		verify(fireStationRepositoryMock).findByAddress(anyString());
 	}
 
 	@Test
@@ -91,11 +92,11 @@ public class ServiceFireStationTest {
 			"correct order")
 	public void givenARegisteredFireStation_whenDeleteFireStation_thenDeletingShouldBeDoneInCorrectOrder()
 			throws Exception {
-		when(fireStationRepositoryMock.find(toString(), anyInt())).thenReturn(fire1);
+		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(fire1);
 
 		fireStationService.deleteFireStation(fire1.getAddress(), fire1.getStation());
 
-		verify(fireStationRepositoryMock).find(toString(), anyInt());
+		verify(fireStationRepositoryMock).find(anyString(), anyInt());
 		verify(fireStationRepositoryMock).delete(any(FireStation.class));
 	}
 
@@ -105,12 +106,12 @@ public class ServiceFireStationTest {
 			"should be Returned correctly")
 	public void givenAFireStationByAddress_whenGetFireStationByAddress_thenFireStationByAddressShouldBeReturnCorrectly()
 			throws Exception {
-		when(fireStationRepositoryMock.findByAddress(toString())).thenReturn(fire1);
+		when(fireStationRepositoryMock.findByAddress(anyString())).thenReturn(fire1);
 
-		FireStation fireByAddress = fireStationService.getFireStationByAddress(toString());
+		FireStation fireByAddress = fireStationService.getFireStationByAddress(anyString());
 
 		assertThat(fireByAddress).isEqualTo(fire1);
-		verify(fireStationRepositoryMock).findByAddress(toString());
+		verify(fireStationRepositoryMock).findByAddress(anyString());
 	}
 
 	@Test
@@ -134,12 +135,12 @@ public class ServiceFireStationTest {
 			"should be returned correctly")
 	public void givenFireStationKeyId_whenGetFireStationByKeyId_thenExpectedFireStationShouldBeReturnCorrectly()
 			throws Exception {
-		when(fireStationRepositoryMock.find(toString(), anyInt())).thenReturn(fire1);
+		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(fire1);
 
 		FireStation fireByIdFound = fireStationService.getFireStationByKeyId(fire1.getAddress(), fire1.getStation());
 
-		assertThat(fireByIdFound).isEqualTo(fire);
-		verify(fireStationRepositoryMock).find(toString(), anyInt());
+		assertThat(fireByIdFound).isEqualTo(fire1);
+		verify(fireStationRepositoryMock).find(anyString(), anyInt());
 
 	}
 }

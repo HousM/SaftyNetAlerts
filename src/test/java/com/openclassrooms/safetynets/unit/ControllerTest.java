@@ -2,6 +2,7 @@ package com.openclassrooms.safetynets.unit;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,14 +31,15 @@ import com.openclassrooms.safetynets.alerts.service.AlertsService;
 @WebMvcTest(AlertsController.class)
 public class ControllerTest {
 	@Autowired
-	private MockMvc mockMvc;
+	public MockMvc mockMvc;
 
 	@MockBean
-	private AlertsService alertsService;
+	public AlertsService alertsService;
+
+	private ObjectMapper objectMapper;
 
 	@Before
 	public void setUp() {
-		@SuppressWarnings("unused")
 		ObjectMapper objectMapper = new ObjectMapper();
 	}
 
@@ -71,13 +73,13 @@ public class ControllerTest {
 	@Tag("GET-Fire")
 	@DisplayName("Given an address, when Fire request, then return Ok status")
 	public void givenAValidAddress_whenFireRequest_thenReturnOKStatus() throws Exception {
-		when(alertsService.getPersonsByAddress(toString())).thenReturn(any(FireDTO.class));
+		when(alertsService.getPersonsByAddress(anyString())).thenReturn(any(FireDTO.class));
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/fire")
 				.contentType(MediaType.APPLICATION_JSON)
 				.param("address", "29 15th St"))
 				.andExpect(status().isOk());
 
-		verify(alertsService).getPersonsByAddress(toString());
+		verify(alertsService).getPersonsByAddress(anyString());
 	}
 }
