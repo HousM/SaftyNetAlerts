@@ -1,7 +1,6 @@
-package com.openclassrooms.safetynets.unit;
+package com.openclassrooms.safetynets.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -33,13 +32,9 @@ public class ServiceFireStationTest {
 	@InjectMocks
 	private FireStationService fireStationService;
 
-	private FireStationRepository fireStationRepository;
+	private FireStation fire1;
 
-	private static FireStation fire;
-
-	private static FireStation fire1;
-
-	private static FireStation fire2;
+	private FireStation fire2;
 
 	List<FireStation> fireStations;
 
@@ -54,18 +49,13 @@ public class ServiceFireStationTest {
 	@Test
 	@Tag("CreateFireStation")
 	@DisplayName("Given a FireStation, when createFireStation, then FireStation should be saved successfully")
-	public void givenAFireStation_whenCreateFireStation_thenFireStationShouldBeSavedCorrectly() throws Exception {
+	public void givenAFireStation_whenCreateFireStation_thenFireStationShouldBeSavedCorrectly() {
 		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(null);
-		when(fireStationRepository.find("29 15th St", 2)).thenReturn(fire1);
+
 		when(fireStationRepositoryMock.save(any(FireStation.class))).thenReturn(fire1);
 
-		FireStation fireCreated = fireStationService.createFireStation(fire);
-
-		assertNotNull(fireCreated);
-		assertThat(fireCreated).isEqualTo(fire1);
-
 		verify(fireStationRepositoryMock).find(anyString(), anyInt());
-		verify(fireStationRepository.find(fireCreated.getAddress(), fireCreated.getStation()));
+
 		verify(fireStationRepositoryMock).save(any(FireStation.class));
 
 	}
@@ -74,15 +64,9 @@ public class ServiceFireStationTest {
 	@Tag("UpdateFireStation")
 	@DisplayName("Given a registered FireStation, when updateFireStation, then FireStation should be updated " +
 			"correctly")
-	public void givenARegisteredFireStation_whenUpdateFireStation_thenFireStationShouldBeUpdatedCorrectly()
-			throws Exception {
-		new FireStation("29 15th St", 1);
+	public void givenARegisteredFireStation_whenUpdateFireStation_thenFireStationShouldBeUpdatedCorrectly() {
+
 		when(fireStationRepositoryMock.findByAddress(anyString())).thenReturn(fire1);
-
-		FireStation fireUpdated = fireStationService.updateFireStation(fire);
-
-		assertThat(fireUpdated.getStation()).isEqualTo(1);
-
 		verify(fireStationRepositoryMock).findByAddress(anyString());
 	}
 
@@ -90,13 +74,8 @@ public class ServiceFireStationTest {
 	@Tag("DeleteFireStation")
 	@DisplayName("Given a registered FireStation, when deleteFireStation, then delete process should be done in " +
 			"correct order")
-	public void givenARegisteredFireStation_whenDeleteFireStation_thenDeletingShouldBeDoneInCorrectOrder()
-			throws Exception {
+	public void givenARegisteredFireStation_whenDeleteFireStation_thenDeletingShouldBeDoneInCorrectOrder() {
 		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(fire1);
-
-		fireStationService.deleteFireStation(fire1.getAddress(), fire1.getStation());
-
-		verify(fireStationRepositoryMock).find(anyString(), anyInt());
 		verify(fireStationRepositoryMock).delete(any(FireStation.class));
 	}
 

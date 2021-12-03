@@ -50,14 +50,14 @@ public class MedicalRecordController {
 	 * Adds a new medicalRecord.
 	 */
 	@PostMapping("/medicalRecord")
-	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord med) throws Exception {
+	public ResponseEntity<MedicalRecord> saveMedicalRecord(@RequestBody MedicalRecord med) throws Exception {
 		logger.debug("MedicalRecord POST Request on : " + med.getFirstName() + " " + med.getLastName());
 
 		if (med.getFirstName() == null || med.getFirstName().isEmpty() || med.getLastName() == null ||
 				med.getLastName().isEmpty()) {
 			throw new Exception("Bad request : missing or incomplete body request");
 		}
-		MedicalRecord medicalRecordCreated = medicalRecordService.createMedicalRecord(med);
+		MedicalRecord medicalRecordCreated = medicalRecordService.saveMedicalRecord(med);
 
 		logger.info("MedicalRecord POST request - SUCCESS");
 		return new ResponseEntity<>(medicalRecordCreated, HttpStatus.CREATED);

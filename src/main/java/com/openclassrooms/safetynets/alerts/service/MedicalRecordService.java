@@ -23,7 +23,7 @@ public class MedicalRecordService {
 	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
 
-	public MedicalRecord createMedicalRecord(MedicalRecord med) throws Exception {
+	public MedicalRecord saveMedicalRecord(MedicalRecord med) throws Exception {
 		logger.debug("Inside MedicalRecordService.createMedicalRecord for: " + med.getFirstName(), med.getLastName());
 
 		MedicalRecord medFound = medicalRecordRepository.findByIdentity(med.getFirstName(),

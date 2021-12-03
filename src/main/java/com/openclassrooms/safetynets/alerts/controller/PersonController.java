@@ -1,12 +1,15 @@
 package com.openclassrooms.safetynets.alerts.controller;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,37 +23,66 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
-	// Persons list
-	@GetMapping("/listPersons")
-	public List<Person> listPerson() throws Exception {
-		return personService.getPersonList();
+	// Add a new person
+	@PostMapping("/person")
+	public ResponseEntity<Person> createPerson(@RequestBody Person person) throws Exception {
+		logger.debug("Person CREATE Request on : " + person.getFirstName() + " " + person.getLastName());
+
+		if (person.getFirstName() == null || person.getFirstName().isEmpty() || person.getLastName() == null
+				|| person.getLastName().isEmpty()) {
+			throw new Exception("Bad request :  missing or incomplete body request");
+		}
+		Person personCreated = personService.updatePerson(person);
+
+		logger.info("Person POST request - SUCCESS");
+		return new ResponseEntity<>(personCreated, HttpStatus.CREATED);
 	}
 
-	// List of person living at the address
-	@GetMapping("/address")
-	public List<Person> listByAddress(@RequestParam(required = false) String address) throws Exception {
-		return personService.getPersonsByAddress(address);
-	}
+	// Update a stored person
+	@PutMapping("/person")
+	public ResponseEntity<Person> updatePerson(@RequestBody Person person) throws Exception {
+		logger.debug("Person UPDATE Request on : " + person.getFirstName() + " " + person.getLastName());
 
-	// City for inhabitant
-	@GetMapping("/city")
-	public List<Person> listByCity(@RequestParam(required = false) String city) throws Exception {
-		return personService.getPersonsByCity(city);
-	}
+		if (person.getFirstName() == null || person.getFirstName().isEmpty() || person.getLastName() == null
+				|| person.getLastName().isEmpty()) {
+			throw new Exception("Bad request : missing or incomplete body request");
+		}
+		Person personUpdated = personService.updatePerson(person);
 
-	// ID for inhabitant
-	@GetMapping("/id")
-	public Person listById(@RequestParam(required = false) String firstName, String lastName) throws Exception {
-		return personService.getPersonById(firstName, lastName);
+		logger.info("Person PUT request - SUCCESS");
+		return new ResponseEntity<>(personUpdated, HttpStatus.OK);
 	}
 
 	// Delete a person
 	@DeleteMapping("/person")
-	public void removePerson(@RequestParam(required = false) String firstName,
-			@RequestParam(required = false) String lastName) throws Exception {
-		personService.deletePerson(firstName, lastName);
-		logger.info("Remove person(s) and associated medical records succeeded");
+	public ResponseEntity<Void> deletePerson(@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") final String lastName) throws Exception {
+		logger.debug("Person DELETE Request on : " + firstName + " " + lastName);
 
+		if (firstName == null || firstName.trim().length() == 0 || lastName == null
+				|| lastName.trim().length() == 0) {
+			throw new Exception("Bad request : missing or incomplete parameter");
+		}
+		personService.deletePerson(firstName, lastName);
+
+		logger.info("Person DELETE request - SUCCESS");
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	// Retrieves a stored person
+	@GetMapping("/person")
+	public ResponseEntity<Person> getPerson(@RequestParam("firstName") String firstName,
+			@RequestParam("lastName") final String lastName) throws Exception {
+		logger.debug("Person GET Request on : {} {}", firstName, lastName);
+
+		if (firstName == null || firstName.trim().length() == 0 || lastName == null
+				|| lastName.trim().length() == 0) {
+			throw new Exception("Bad request : missing or incomplete parameter");
+		}
+		Person personDTO = personService.getPersonById(firstName, lastName);
+
+		logger.info("Person GET Request - SUCCESS");
+		return new ResponseEntity<>(personDTO, HttpStatus.OK);
 	}
 
 }

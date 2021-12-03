@@ -1,4 +1,4 @@
-package com.openclassrooms.safetynets.alerts;
+package com.openclassrooms.safetynets;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

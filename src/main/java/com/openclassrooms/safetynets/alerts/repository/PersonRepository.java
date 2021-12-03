@@ -102,6 +102,7 @@ public class PersonRepository {
 	/**
 	 * Deletes the given Person
 	 */
+
 	public void delete(Person pers) {
 		logger.debug("Inside PersonRepository.delete for : " + pers.getFirstName(), pers.getLastName());
 		personsMap.remove(pers.getFirstName() + pers.getLastName());

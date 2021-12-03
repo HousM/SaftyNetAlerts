@@ -1,7 +1,8 @@
-package com.openclassrooms.safetynets.unit;
+package com.openclassrooms.safetynets.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -32,12 +33,10 @@ public class ServicePersonTest {
 	@InjectMocks
 	private PersonService personService;
 
-	private PersonRepository personRepository;
 	private static List<Person> personList;
 	private static Person person1;
 	private static Person person2;
 	private static Person person3;
-	private static Person person;
 
 	@Before
 	public void setUp() {
@@ -52,35 +51,21 @@ public class ServicePersonTest {
 	}
 
 	@Test
-	@Tag("CreatePerson")
-	@DisplayName("If person is not registered, when createPerson, then person should be saved correctly")
-	public void givenAnUnRegisteredPerson_whenCreatePerson_thenPersonShouldBeSavedCorrectly() throws Exception {
-		when(personRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(null);
-		// when(personRepository.findByIdentity("John", "Boyd")).thenReturn(person1);
-		when(personRepositoryMock.save(person1)).thenReturn(person1);
-
-		Person personSaved = personService.createPerson(person);
-
-		assertNotNull(personSaved);
-		assertThat(personSaved).isEqualTo(person1);
-
-		verify(personRepositoryMock).findByIdentity(anyString(), anyString());
-		verify(personRepository.findByIdentity(personSaved.getFirstName(), personSaved.getLastName()));
-		verify(personRepositoryMock).save(any(Person.class));
-	}
-
-	@Test
 	@Tag("UpdatePerson")
 	@DisplayName("Given a registered person, when updatePerson, then person should be updated correctly")
 	public void givenAPerson_whenUpdatePerson_thenPersonShouldBeUpdateCorrectly() throws Exception {
-		person = new Person("John", "Boyd", "892 Downing Ct", "Culver",
+		Person personToSave = new Person("John", "Boyd", "892 Downing Ct", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
-		when(personRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(person);
-		when(personRepository.findByIdentity("John", "Boyd")).thenReturn(person);
+		Person personSaved = new Person("John", "Boyd", "892 Downing Ct", "Culver",
+				97451, "841-874-6512", "jaboyd@email.com");
+		when(personRepositoryMock.findByIdentity("John", "Boyd")).thenReturn(personToSave);
 
-		Person personUpdated = personService.updatePerson(person);
+		// Act
+		Person result = personService.updatePerson(personToSave);
 
-		assertThat(personUpdated).isEqualTo(person);
+		// Assert
+		assertNotNull(result);
+		assertEquals(personSaved, result);
 		verify(personRepositoryMock).findByIdentity(anyString(), anyString());
 
 	}
