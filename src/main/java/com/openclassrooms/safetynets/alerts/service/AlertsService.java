@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.dto.FloodDTO;
+import com.openclassrooms.safetynets.alerts.dto.MedicalRecordDTO;
 import com.openclassrooms.safetynets.alerts.dto.PersonDTO;
 import com.openclassrooms.safetynets.alerts.dto.PhoneDTO;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
-import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 
@@ -60,10 +60,10 @@ public class AlertsService {
 					// Determination if it is an adult or a child
 					// by retrieving his medical file to obtain his date of birth and calculate his
 					// age.
-					MedicalRecord med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
+					MedicalRecordDTO med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
 							pers.getLastName());
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm/dd/yyyy");
-					LocalDate birthDate = LocalDate.parse(med.getBirthdate(), formatter);
+					LocalDate birthDate = LocalDate.parse(med.getBirthDate(), formatter);
 					int age = ageCalcul.getAge(birthDate);
 					if (age <= MAX_AGE_FOR_CHILD_ALERT) {
 						childCount++;
@@ -94,16 +94,16 @@ public class AlertsService {
 			// Calculates person's age by retrieving his medical record to obtain his date
 			// of birth.
 			if (pers.getLastName().equals(lastName)) {
-				MedicalRecord med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
+				MedicalRecordDTO med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
 						pers.getLastName());
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm/dd/yyyy");
-				LocalDate birthDate = LocalDate.parse(med.getBirthdate(), formatter);
+				LocalDate birthDate = LocalDate.parse(med.getBirthDate(), formatter);
 				int age = ageCalcul.getAge(birthDate);
 
 				// Create a "Person" object that contains specific data required of each person
 				// with the given last name and adds it to an ArrayList.
 				personsInfo.add(new Person(pers.getLastName(), pers.getAddress(),
-						age, pers.getEmail(), med.getMedicationsList(), med.getAllergiesList()));
+						age, pers.getEmail(), med.getMedications(), med.getAllergies()));
 			}
 		}
 
@@ -141,16 +141,16 @@ public class AlertsService {
 
 			// Calculation of person's age by retrieving
 			// his medical record to obtain his date of birth.
-			MedicalRecord med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
+			MedicalRecordDTO med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
 					pers.getLastName());
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm/dd/yyyy");
-			LocalDate birthdate = LocalDate.parse(med.getBirthdate(), formatter);
+			LocalDate birthdate = LocalDate.parse(med.getBirthDate(), formatter);
 			int age = ageCalcul.getAge(birthdate);
 
 			// Create a "Person" object containing specific data required of each
 			// person living at a given address and add it to an ArrayList
 			persons.add(new Person(pers.getLastName(), pers.getPhone(),
-					age, med.getMedicationsList(), med.getAllergiesList()));
+					age, med.getMedications(), med.getAllergies()));
 		}
 
 		// Retrieves fire station that covered the given address to get it station
@@ -185,16 +185,16 @@ public class AlertsService {
 
 					// Calculates age for each person from household.
 					for (Person pers : persons) {
-						MedicalRecord med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
+						MedicalRecordDTO med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
 								pers.getLastName());
 						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
-						LocalDate birthDate = LocalDate.parse(med.getBirthdate(), formatter);
+						LocalDate birthDate = LocalDate.parse(med.getBirthDate(), formatter);
 						int age = ageCalcul.getAge(birthDate);
 						// Creates a PersonAddress object that contains specific data requires for each
 						// person from
 						// household and adds it to an ArrayList.
 						personAddress.add(new Person(pers.getLastName(), pers.getPhone(),
-								age, med.getMedicationsList(), med.getAllergiesList()));
+								age, med.getMedications(), med.getAllergies()));
 					}
 					// Creates a Household object that contains its address and list of persons
 					// living in it.

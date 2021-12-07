@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.safetynets.alerts.dto.MedicalRecordDTO;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.repository.MedicalRecordRepository;
 
@@ -22,8 +23,9 @@ public class MedicalRecordService {
 
 	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
+	private MedicalRecordDTO medicalRecordDTO;
 
-	public MedicalRecord saveMedicalRecord(MedicalRecord med) throws Exception {
+	public MedicalRecordDTO saveMedicalRecord(MedicalRecordDTO med) throws Exception {
 		logger.debug("Inside MedicalRecordService.createMedicalRecord for: " + med.getFirstName(), med.getLastName());
 
 		MedicalRecord medFound = medicalRecordRepository.findByIdentity(med.getFirstName(),
@@ -33,12 +35,13 @@ public class MedicalRecordService {
 			throw new Exception("MedicalRecord already registered");
 		}
 
-		MedicalRecord medSaved = medicalRecordRepository.save(medFound);
+		MedicalRecord medtoSaved = medicalRecordRepository.save(medFound);
+		MedicalRecordDTO medSaved = medicalRecordDTO.toMedicalRecordDTO(medtoSaved);
 
 		return medSaved;
 	}
 
-	public MedicalRecord updateMedicalRecord(MedicalRecord med) throws Exception {
+	public MedicalRecordDTO updateMedicalRecord(MedicalRecordDTO med) throws Exception {
 		logger.debug("Inside MedicalRecordService.updateMedicalRecord for: " + med.getFirstName(), med.getLastName());
 		MedicalRecord medFound = medicalRecordRepository.findByIdentity(med.getFirstName(),
 				med.getLastName());
@@ -46,11 +49,13 @@ public class MedicalRecordService {
 		if (medFound == null) {
 			throw new Exception("MedicalRecord not found");
 		}
-		medFound.setBirthdate(med.getBirthdate());
-		medFound.setMedicationsList(med.getMedicationsList());
-		medFound.setAllergiesList(med.getAllergiesList());
+		medFound.setBirthdate(med.getBirthDate());
+		medFound.setMedicationsList(med.getMedications());
+		medFound.setAllergiesList(med.getAllergies());
 
-		return updateMedicalRecord(medFound);
+		MedicalRecord medtoSaved = medicalRecordRepository.save(medFound);
+		MedicalRecordDTO medSaved = medicalRecordDTO.toMedicalRecordDTO(medtoSaved);
+		return saveMedicalRecord(medSaved);
 	}
 
 	public void deleteMedicalRecord(String firstName, String lastName) throws Exception {
@@ -64,7 +69,7 @@ public class MedicalRecordService {
 		medicalRecordRepository.delete(medicalRecordToDelete);
 	}
 
-	public MedicalRecord getMedicalRecordById(String firstName, String lastName) throws Exception {
+	public MedicalRecordDTO getMedicalRecordById(String firstName, String lastName) throws Exception {
 		logger.debug("Inside MedicalRecordService.getMedicalRecordByID for {} {}",
 				firstName, lastName);
 		MedicalRecord medicalRecord = medicalRecordRepository.findByIdentity(firstName, lastName);
@@ -72,8 +77,8 @@ public class MedicalRecordService {
 		if (medicalRecord == null) {
 			throw new Exception("Failed to get medicalRecord for : " + firstName + " " + lastName);
 		}
-
-		return medicalRecord;
+		MedicalRecordDTO medicalRecorddto = medicalRecordDTO.toMedicalRecordDTO(medicalRecord);
+		return medicalRecorddto;
 	}
 
 }

@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.openclassrooms.safetynets.alerts.dto.MedicalRecordDTO;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.repository.MedicalRecordRepository;
 import com.openclassrooms.safetynets.alerts.service.MedicalRecordService;
@@ -30,47 +31,35 @@ public class ServiceMedicalRecordTest {
 	private MedicalRecordService medicalRecordService;
 
 	private MedicalRecord med;
+	private MedicalRecordDTO medDTO;
 
 	@Before
 	public void setUp() {
 		med = new MedicalRecord("John", "Boyd", "03/06/1984",
 				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
+		medDTO = new MedicalRecordDTO("John", "Boyd", "03/06/1984",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 	}
-//
-//	@Test
-//	@DisplayName("Update Medicalrecord: success case")
-//	public void testSaveMedicalrecord() throws Exception {
-//		// Arrange
-//		MedicalRecord medicalrecordToSave = new MedicalRecord("New", "NewName", "03/06/1984",
-//				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
-//		MedicalRecord medicalrecordExpected = new MedicalRecord("New", "NewName",
-//				"03/06/1984",
-//				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
-//
-//		when(medicalRecordRepositoryMock.findByIdentity("New", "NewName")).thenReturn(medicalrecordToSave);
-//		// Act
-//		MedicalRecord medSaved = medicalRecordService.updateMedicalRecord(medicalrecordToSave);
-//		// Assert
-//		assertNotNull(medSaved);
-//		assertEquals(medicalrecordExpected, medSaved);
-//
-//		verify(medicalRecordRepositoryMock).save(any(MedicalRecord.class));
-//
-//	}
 
-//
-//	@Test
-//	@Tag("UpdateMedicalRecord")
-//	@DisplayName("Given a registered medicalRecord, when updateMedicalRecord, then medicalRecord should be updated" +
-//			" correctly")
-//	public void testCreateMedicalrecord() {
-//		MedicalRecord medicalrecordTocreate = new MedicalRecord("New", "NewName", "03/06/1984",
-//				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
-//
-//		when(medicalRecordRepositoryMock.findByIdentity("New", "NewName")).thenReturn(medicalrecordTocreate);
-//		verify(medicalRecordRepositoryMock).save(any(MedicalRecord.class));
-//
-//	}
+	@Test
+	@DisplayName("Update Medicalrecord: success case")
+	public void testSaveMedicalrecord() throws Exception {
+
+		when(medicalRecordRepositoryMock.findByIdentity("New", "NewName")).thenReturn(med);
+
+	}
+
+	@Test
+	@Tag("UpdateMedicalRecord")
+	@DisplayName("Given a registered medicalRecord, when updateMedicalRecord, then medicalRecord should be updated" +
+			" correctly")
+	public void testCreateMedicalrecord() {
+		MedicalRecord medicalrecordTocreate = new MedicalRecord("New", "NewName", "03/06/1984",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
+
+		when(medicalRecordRepositoryMock.findByIdentity("New", "NewName")).thenReturn(medicalrecordTocreate);
+
+	}
 
 	@Test
 	@Tag("DeleteMedicalRecord")
@@ -92,11 +81,12 @@ public class ServiceMedicalRecordTest {
 	public void givenAMedicalRecordById_whenGetMedicalRecordById_thenExpectedMedicalRecordShouldBeReturnCorrectly()
 			throws Exception {
 		when(medicalRecordRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(med);
+		when(medDTO.toMedicalRecordDTO(any(MedicalRecord.class))).thenReturn(medDTO);
 
-		MedicalRecord medByIdFound = medicalRecordService.getMedicalRecordById(med.getFirstName(),
-				med.getLastName());
+		MedicalRecordDTO medByIdFound = medicalRecordService.getMedicalRecordById(medDTO.getFirstName(),
+				medDTO.getLastName());
 
-		assertThat(medByIdFound).isEqualTo(med);
+		assertThat(medByIdFound).isEqualTo(medDTO);
 
 		verify(medicalRecordRepositoryMock).findByIdentity(anyString(), anyString());
 

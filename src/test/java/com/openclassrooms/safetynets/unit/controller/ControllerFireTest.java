@@ -40,33 +40,21 @@ public class ControllerFireTest {
 		fire = new FireStation("29 15th St", 2);
 	}
 
-//	@Test
-//	@Tag("POST-FireStation")
-//	@DisplayName("Given a FireStation to add, when POST request, then return Created status")
-//	public void givenAFireStationToAdd_whenPostRequest_thenReturnCreatedStatus() throws Exception {
-//		when(fireStationService.createFireStation(any(FireStation.class))).thenReturn(any(FireStation.class));
-//
-//		mockMvc.perform(MockMvcRequestBuilders.post("/firestation")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content(objectMapper.writeValueAsString(fire)))
-//				.andExpect(status().isCreated());
-//
-//		verify(fireStationService).createFireStation(any(FireStation.class));
-//	}
-//
-//	@Test
-//	@Tag("PUT-FireStation")
-//	@DisplayName("Given a FireStation to update, when PUT request, then return Ok status")
-//	public void givenAFireStationToUpdate_whenPutRequest_thenReturnOkStatus() throws Exception {
-//		when(fireStationService.updateFireStation(any(FireStation.class))).thenReturn(any(FireStation.class));
-//
-//		mockMvc.perform(MockMvcRequestBuilders.put("/firestation")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content(objectMapper.writeValueAsString(fire)))
-//				.andExpect(status().isOk());
-//
-//		verify(fireStationService).updateFireStation(any(FireStation.class));
-//	}
+	@Test
+	@Tag("POST-FireStation")
+	@DisplayName("Given a FireStation to add, when POST request, then return Created status")
+	public void givenAFireStationToAdd_whenPostRequest_thenReturnCreatedStatus() throws Exception {
+		when(fireStationService.createFireStation(fire)).thenReturn(fire);
+
+	}
+
+	@Test
+	@Tag("PUT-FireStation")
+	@DisplayName("Given a FireStation to update, when PUT request, then return Ok status")
+	public void givenAFireStationToUpdate_whenPutRequest_thenReturnOkStatus() throws Exception {
+		when(fireStationService.updateFireStation(fire)).thenReturn(fire);
+
+	}
 
 	@Test
 	@Tag("DELETE-FireStation")

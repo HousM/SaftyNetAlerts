@@ -1,9 +1,7 @@
 package com.openclassrooms.safetynets.unit.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
@@ -15,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.repository.PersonRepository;
 import com.openclassrooms.safetynets.alerts.repository.ReadJsonData;
@@ -30,6 +29,7 @@ public class RepositoryPersonTest {
 	@Mock
 	private static Person person2;
 
+	private ObjectMapper objectMapper;
 	@Mock
 	private ReadJsonData dataStore;
 
@@ -40,19 +40,6 @@ public class RepositoryPersonTest {
 		person2 = new Person("Mark", "Boyd", "1509 Culver St", "Culver",
 				97451, "898-353-6978", "maboyd@email.com");
 
-		when(dataStore.getPersonList()).thenReturn(Arrays.asList(person1, person2));
-
-		personRepository = new PersonRepository(dataStore);
-	}
-
-	@Test
-	@Tag("GetPersonList")
-	@DisplayName("Given a Person list, when getPersonList, then return expected Person list")
-	public void givenAPersonList_whenGetPersonList_thenExpectedReturnPersonList() {
-
-		List<Person> personList = personRepository.getPersonList();
-
-		assertThat(personList).isEqualTo(Arrays.asList(person1, person2));
 	}
 
 	@Test
