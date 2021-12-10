@@ -14,7 +14,7 @@ import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.repository.ReadJsonData;
 
-public class ModelPersonTest {
+public class ModelsTest {
 
 	@Mock
 	private ReadJsonData dataStore;
