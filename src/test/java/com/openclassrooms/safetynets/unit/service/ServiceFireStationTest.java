@@ -21,8 +21,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
 
 import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
@@ -49,8 +47,8 @@ public class ServiceFireStationTest {
 	@Mock
 	private FireDTO firedto;
 
-	@Autowired
-	private MockMvc mockMvc;
+//	@Autowired
+//	private MockMvc mockMvc;
 
 //	@Test
 //	public void createFireStationTest() throws Exception {
@@ -85,7 +83,7 @@ public class ServiceFireStationTest {
 	}
 
 	@Test
-	@DisplayName("Save Firestation: success cases")
+	@DisplayName("Save Firestation: success case")
 	void createFireStationtes2() throws Exception {
 		// Arrange
 		FireStation firestationToSave = new FireStation("NewAddress", 1);
