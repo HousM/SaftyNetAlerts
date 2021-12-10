@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,7 +44,6 @@ public class RepositoryFireTest {
 
 	@Test
 	@Tag("Save")
-	@DisplayName("Given a FireStation, when save, then FireStation should be saved successfully")
 	public void givenAFireStation_whenSave_thenFireStationShouldBeSaveCorrectly() {
 		FireStation fireStationToSave = new FireStation("480 Manchester St", 2);
 
@@ -56,7 +54,6 @@ public class RepositoryFireTest {
 
 	@Test
 	@Tag("Delete")
-	@DisplayName("Given a FireStation, when delete, then FireStation should be deleted successfully")
 	public void givenAFireStation_whenDelete_thenFireStationShouldBeDeleteCorrectly() {
 		fireStationRepository.delete(fire2);
 
@@ -65,7 +62,6 @@ public class RepositoryFireTest {
 
 	@Test
 	@Tag("Find")
-	@DisplayName("Given an unregistered FireStation, when find, then return null")
 	public void givenAUnRegisteredFireStation_whenFind_thenReturnNull() {
 		FireStation unRegisteredFireStation = new FireStation("489 Manchester St", 1);
 
@@ -76,8 +72,7 @@ public class RepositoryFireTest {
 	}
 
 	@Test
-	@Tag("FindByAddress")
-	@DisplayName("Given an unregistered address, when findByAddress, then return null")
+	@Tag("findByAddress")
 	public void givenAnUnRegisteredAddress_whenFindByAddress_thenReturnNull() {
 		String unRegisteredAddress = "947 E. Rose Dr";
 
@@ -87,8 +82,7 @@ public class RepositoryFireTest {
 	}
 
 	@Test
-	@Tag("FindByStation")
-	@DisplayName("Given a station number, when findByStation, then return FireStation associated with that station number")
+	@Tag("findByStation")
 	public void givenAStationNumber_whenFindByStation_thenReturnFireStationAssociatedWithThatStationNumber() {
 		List<FireStation> fireSFoundByStation = fireStationRepository.findByStation(1);
 

@@ -2,6 +2,7 @@ package com.openclassrooms.safetynets.alerts.dto;
 
 import java.util.List;
 
+import com.openclassrooms.safetynets.alerts.model.FireStation;
 import com.openclassrooms.safetynets.alerts.model.Person;
 
 public class FireDTO {
@@ -25,6 +26,11 @@ public class FireDTO {
 	public FireDTO(int station, List<Person> persons) {
 		this.station = station;
 		this.persons = persons;
+	}
+
+	public FireDTO toFireDTO(FireStation fire) {
+
+		return new FireDTO(fire.getAddress(), fire.getStation());
 	}
 
 	public FireDTO(String address, int station) {

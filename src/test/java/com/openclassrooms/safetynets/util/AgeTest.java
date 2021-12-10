@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 
 public class AgeTest {
-	private static final AgeCalcul ageCalculator = new AgeCalcul();
+	private static AgeCalcul ageCalculator = new AgeCalcul();
 
 	@Test
 	@Tag("ValidAge")

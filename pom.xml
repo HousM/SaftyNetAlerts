@@ -98,6 +98,18 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<forkMode>pertest</forkMode>
+					<workingDirectory>${basedir}/target</workingDirectory>
+					<includes>
+						<include>**/*TestSuite.java</include>
+						<include>**/TestSuite*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<reporting>
@@ -107,11 +119,7 @@
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>3.1.1</version>
 			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
-			</plugin>
+
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

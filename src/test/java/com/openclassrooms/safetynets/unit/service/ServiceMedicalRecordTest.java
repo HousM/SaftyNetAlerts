@@ -1,94 +1,77 @@
 package com.openclassrooms.safetynets.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.openclassrooms.safetynets.alerts.dto.MedicalRecordDTO;
-import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.repository.MedicalRecordRepository;
 import com.openclassrooms.safetynets.alerts.service.MedicalRecordService;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ServiceMedicalRecordTest {
-	@Mock
+	@InjectMocks
 	private MedicalRecordRepository medicalRecordRepositoryMock;
 
-	@InjectMocks
 	private MedicalRecordService medicalRecordService;
 
-	private MedicalRecord med;
+	@Mock
 	private MedicalRecordDTO medDTO;
 
-	@Before
-	public void setUp() {
-		med = new MedicalRecord("John", "Boyd", "03/06/1984",
+	@Mock
+	private Object medUpdated;
+
+	@Test
+	public void saveMedicalrecordTest() throws Exception {
+		medDTO = new MedicalRecordDTO("JohnN", "BoydN", "03/06/1985",
 				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
-		medDTO = new MedicalRecordDTO("John", "Boyd", "03/06/1984",
-				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
+		assertThat(medicalRecordService.saveMedicalRecord(medDTO)).isNotNull();
 	}
 
 	@Test
-	@DisplayName("Update Medicalrecord: success case")
-	public void testSaveMedicalrecord() throws Exception {
-
-		when(medicalRecordRepositoryMock.findByIdentity("New", "NewName")).thenReturn(med);
-
-	}
-
-	@Test
-	@Tag("UpdateMedicalRecord")
 	@DisplayName("Given a registered medicalRecord, when updateMedicalRecord, then medicalRecord should be updated" +
 			" correctly")
-	public void testCreateMedicalrecord() {
-		MedicalRecord medicalrecordTocreate = new MedicalRecord("New", "NewName", "03/06/1984",
-				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
+	public void updateMedicalRecordTest() throws Exception {
 
-		when(medicalRecordRepositoryMock.findByIdentity("New", "NewName")).thenReturn(medicalrecordTocreate);
+		medDTO = new MedicalRecordDTO("JohnN", "BoydN", "03/06/1985",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
+		medUpdated = medicalRecordService.updateMedicalRecord(medDTO);
+		assertThat(medicalRecordService.updateMedicalRecord(medDTO)).isNotNull();
+		assertThat(medUpdated).isEqualTo(medDTO);
 
 	}
 
 	@Test
-	@Tag("DeleteMedicalRecord")
 	@DisplayName("Given a person Id, when deleteMedicalRecord, then delete process should be done " +
 			"in correct order")
-	public void givenValidId_whenDeleteMedicalRecord_thenDeletingShouldBeDoneInCorrectOrder() throws Exception {
-		when(medicalRecordRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(med);
-
-		medicalRecordService.deleteMedicalRecord(med.getFirstName(), med.getLastName());
-
-		verify(medicalRecordRepositoryMock).findByIdentity(anyString(), anyString());
-		verify(medicalRecordRepositoryMock).delete(any(MedicalRecord.class));
+	public void deleteMedicalRecordTest() throws Exception {
+		medDTO = new MedicalRecordDTO("JohnN", "BoydN", "03/06/1985",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
+		medicalRecordService.deleteMedicalRecord(medDTO.getFirstName(), medDTO.getLastName());
+		assertThat(medDTO).isEqualTo(null);
+		assertThat(medicalRecordRepositoryMock.findByIdentity(medDTO.getFirstName(), medDTO.getLastName()))
+				.isEqualTo(null);
 	}
 
 	@Test
-	@Tag("GetMedicalRecordById")
 	@DisplayName("Given a person ID, when getMedicalRecordById, then expected medicalRecord should be " +
 			"returned correctly")
-	public void givenAMedicalRecordById_whenGetMedicalRecordById_thenExpectedMedicalRecordShouldBeReturnCorrectly()
+	public void getMedicalRecordByIdTest()
 			throws Exception {
-		when(medicalRecordRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(med);
-		when(medDTO.toMedicalRecordDTO(any(MedicalRecord.class))).thenReturn(medDTO);
+		medDTO = new MedicalRecordDTO("JohnN", "BoydN", "03/06/1985",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 
 		MedicalRecordDTO medByIdFound = medicalRecordService.getMedicalRecordById(medDTO.getFirstName(),
 				medDTO.getLastName());
 
 		assertThat(medByIdFound).isEqualTo(medDTO);
-
-		verify(medicalRecordRepositoryMock).findByIdentity(anyString(), anyString());
 
 	}
 }

@@ -16,7 +16,7 @@ public class Person {
 	private String email;
 
 	private String birthdate;
-	private long age;
+	private int age;
 
 	private List<String> medicationsList;
 	private List<String> allergiesList;
@@ -39,12 +39,6 @@ public class Person {
 	public Person(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-	}
-
-	public Person(String firstName, String lastName, long age) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.age = age;
 	}
 
 	public Person(String firstName, String lastName, String address, String phone) {
@@ -83,7 +77,7 @@ public class Person {
 		this.birthdate = birthdate;
 	}
 
-	public Long getAge() {
+	public int getAge() {
 		return age;
 	}
 

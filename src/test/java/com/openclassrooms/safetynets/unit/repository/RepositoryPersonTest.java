@@ -13,7 +13,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.repository.PersonRepository;
 import com.openclassrooms.safetynets.alerts.repository.ReadJsonData;
@@ -25,11 +24,10 @@ public class RepositoryPersonTest {
 	private PersonRepository personRepository;
 
 	@Mock
-	private static Person person1;
+	private Person person1;
 	@Mock
-	private static Person person2;
+	private Person person2;
 
-	private ObjectMapper objectMapper;
 	@Mock
 	private ReadJsonData dataStore;
 

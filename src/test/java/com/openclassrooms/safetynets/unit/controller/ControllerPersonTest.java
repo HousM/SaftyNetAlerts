@@ -29,8 +29,6 @@ public class ControllerPersonTest {
 	@MockBean
 	private PersonService personService;
 
-	private ObjectMapper objectMapper;
-
 	private Person person;
 
 	@Mock
@@ -38,7 +36,7 @@ public class ControllerPersonTest {
 
 	@Before
 	void setup() {
-		objectMapper = new ObjectMapper();
+		new ObjectMapper();
 		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
 		person1 = new Person("Mark", "Boyd", "1509 Culver St", "Culver",
