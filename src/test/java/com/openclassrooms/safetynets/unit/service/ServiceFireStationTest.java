@@ -86,7 +86,7 @@ public class ServiceFireStationTest {
 
 	@Test
 	@DisplayName("Save Firestation: success case")
-	void testSaveFirestation() throws Exception {
+	void createFireStationtes2() throws Exception {
 		// Arrange
 		FireStation firestationToSave = new FireStation("NewAddress", 1);
 		FireStation firestationExpected = new FireStation("NewAddress", 1);
