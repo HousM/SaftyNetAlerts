@@ -13,7 +13,7 @@ import com.openclassrooms.safetynets.alerts.repository.MedicalRecordRepository;
 public class MedicalRecordService {
 
 	/**
-	 * PersonRepository logger.
+	 * PersonRepository logger
 	 */
 	private Logger logger = LogManager.getLogger(MedicalRecordService.class);
 
@@ -65,7 +65,6 @@ public class MedicalRecordService {
 		if (medicalRecordToDelete == null) {
 			throw new Exception("MedicalRecord not found");
 		}
-
 		medicalRecordRepository.delete(medicalRecordToDelete);
 	}
 
