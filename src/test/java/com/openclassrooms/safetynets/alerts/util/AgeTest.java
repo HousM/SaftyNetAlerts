@@ -1,4 +1,4 @@
-package com.openclassrooms.safetynets.util;
+package com.openclassrooms.safetynets.alerts.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;

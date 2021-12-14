@@ -1,4 +1,4 @@
-package com.openclassrooms.safetynets.unit.controller;
+package com.openclassrooms.safetynets.alerts.unit.controller;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;

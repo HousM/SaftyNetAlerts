@@ -1,4 +1,4 @@
-package com.openclassrooms.safetynets.model;
+package com.openclassrooms.safetynets.alerts.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

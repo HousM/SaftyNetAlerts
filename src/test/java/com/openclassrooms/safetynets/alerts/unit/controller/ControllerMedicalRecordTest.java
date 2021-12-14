@@ -1,4 +1,4 @@
-package com.openclassrooms.safetynets.unit.controller;
+package com.openclassrooms.safetynets.alerts.unit.controller;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;

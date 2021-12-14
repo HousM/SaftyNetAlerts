@@ -16,8 +16,8 @@ public class MedicalRecordDTO {
 
 	private List<String> allergies;
 
-	public MedicalRecordDTO(final String firstName, final String lastName, final String birthDate,
-			final List<String> medications, final List<String> allergies) {
+	public MedicalRecordDTO(String firstName, String lastName, String birthDate,
+			List<String> medications, List<String> allergies) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthdate = birthDate;

@@ -1,4 +1,4 @@
-package com.openclassrooms.safetynets.unit.repository;
+package com.openclassrooms.safetynets.alerts.unit.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
