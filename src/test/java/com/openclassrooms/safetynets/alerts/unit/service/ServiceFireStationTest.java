@@ -1,27 +1,20 @@
 package com.openclassrooms.safetynets.alerts.unit.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InOrder;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
 
-import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
 import com.openclassrooms.safetynets.alerts.repository.FireStationRepository;
 import com.openclassrooms.safetynets.alerts.service.FireStationService;
@@ -30,90 +23,50 @@ import com.openclassrooms.safetynets.alerts.service.FireStationService;
 @ExtendWith(MockitoExtension.class)
 public class ServiceFireStationTest {
 
-	@Spy
-	private FireStationRepository fireStationRepositoryMock;
-
-	@Mock
+	@InjectMocks
 	private FireStationService fireStationService;
 
 	@Mock
-	private FireStation fire1;
+	private FireStation fireStation;
 	@Mock
-	private FireStation fire2;
-	@Mock
-	List<FireStation> fireStations;
-
-	@Mock
-	private FireDTO firedto;
-
-	@Autowired
-	private MockMvc mockMvc;
+	private FireStationRepository fireStationRepositoryMock;
 
 	@Test
-	@DisplayName("Given a FireStation, when createFireStation, then FireStation should be saved successfully")
-	public void createFireStationtes1() throws Exception {
-		FireDTO firestationDTO = new FireDTO("NewAddress", 1);
-		FireStation fire = new FireStation("NewAddressNew", 2);
-//		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(null);
-//		when(fireStationRepositoryMock.save(any(FireStation.class))).thenReturn(fire1);
-//		when(firedto.toFireDTO(any(FireStation.class))).thenReturn(firestationDTO);
+	public void createFireStationtest() throws Exception {
 
-		FireStation fireCreated = fireStationService.createFireStation(fire);
+		FireStation fire = new FireStation("NewAddress", 1);
 
-//		assertNotNull(fireCreated);
-//		assertThat(fireCreated).isEqualTo(fire);
-		InOrder inOrder = Mockito.inOrder(fireStationRepositoryMock, firedto);
-		inOrder.verify(fireStationRepositoryMock).find(anyString(), anyInt());
-		inOrder.verify(fireStationRepositoryMock).save(any(FireStation.class));
-		inOrder.verify(firedto).toFireDTO(any(FireStation.class));
-	}
+		when(fireStationRepositoryMock.save(fire)).thenReturn(fire);
 
-	@Test
-	@DisplayName("Save Firestation: success case")
-	void createFireStationtes2() throws Exception {
-		// Arrange
-		FireStation firestationToSave = new FireStation("NewAddress", 1);
-		FireStation firestationExpected = new FireStation("NewAddress", 1);
-		doNothing().when(fireStationRepositoryMock).save(firestationToSave);
-//		when(fireStationRepositoryMock.findByAddress("NewAddress")).thenReturn(firestationToSave);
+		FireStation fireToCreate = fireStationService.createFireStation(fire);
 
-		// Act
-		FireStation result = fireStationService.createFireStation(firestationToSave);
-
-		// Assert
-//		assertNotNull(result);
-//		assertEquals(firestationExpected, result);
-		verify(fireStationService).createFireStation(any(FireStation.class));
-//		verify(fireStationRepositoryMock, times(1)).save(result);
+		assertNotNull(fireToCreate);
+		assertThat(fireToCreate).isEqualTo(fire);
 
 	}
 
 	@Test
-	@DisplayName("Given a registered FireStation, when updateFireStation, then FireStation should be updated " +
-			"correctly")
 	public void updateFireStationTest()
 			throws Exception {
 
-		FireStation firestationToUpdate = new FireStation("address", 2);
-		verify(fireStationRepositoryMock).save(firestationToUpdate);
-		// Act
-		FireStation result = fireStationService.updateFireStation(firestationToUpdate);
-		verify(result);
-		// Assert
-//		assertNotNull(result);
-//		assertEquals(firestationToUpdate, result);
+		FireStation fire = new FireStation("29 15th St", 2);
+
+		when(fireStationRepositoryMock.update(any(FireStation.class))).thenReturn(fire);
+
+		FireStation fireToUpdate = fireStationService.updateFireStation(fire);
+
+		assertNotNull(fireToUpdate);
+		assertEquals(fireToUpdate, fire);
 
 	}
 
 	@Test
-	@DisplayName("Given a registered FireStation, when deleteFireStation, then delete process should be done in " +
-			"correct order")
 	public void deleteFireStationTest()
 			throws Exception {
-		FireStationService fire1 = new FireStationService();
-		fireStationService.deleteFireStation(fire1.getClass(), fire1.getStation());
-		verify(fireStationService.deleteFireStation(fire1.getClass(), fire1.getStation()));
-//		assertThat(fireStationRepositoryMock.find(fire1.getAddress(), fire1.getStation())).isEqualTo(null);
+
+		FireStation fire = new FireStation("NewAddress", 1);
+		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(fire);
+		fireStationService.deleteFireStation(fire.getAddress(), fire.getStation());
 
 	}
 
@@ -122,28 +75,14 @@ public class ServiceFireStationTest {
 			"should be Returned correctly")
 	public void getFireStationByAddressTest()
 			throws Exception {
-		fire1 = new FireStation("29 15th St", 2);
-		when(fireStationRepositoryMock.findByAddress(anyString())).thenReturn(fire1);
 
-		FireStation fireByAddress = fireStationService.getFireStationByAddress(anyString());
+		FireStation fire = new FireStation("NewAddress", 1);
 
-//		assertThat(fireByAddress).isEqualTo(fire1);
-		verify(fireStationService).getFireStationByAddress(anyString());
-	}
+		when(fireStationRepositoryMock.findByAddress(anyString())).thenReturn(fire);
 
-	@Test
-	@DisplayName("Given an addresses by station list, when getAddressesByStation, then the addresses by station list " +
-			"should be returned correctly")
-	public void getAddressesByStationTest() throws Exception {
-		fire1 = new FireStation("29 15th St", 2);
-		fire2 = new FireStation("83 Binoc Ave", 2);
-		fireStations = Arrays.asList(fire1, fire2);
-		when(fireStationRepositoryMock.findByStation(anyInt())).thenReturn(fireStations);
+		FireStation fireTofind = fireStationService.getFireStationByAddress("NewAddress");
 
-		List<String> addresses = fireStationService.getAddressesByStation(anyInt());
-
-//		assertThat(addresses).isEqualTo(fireStations);
-//		assertThat(addresses.get(1)).isEqualTo("83 Binoc Ave");
+		assertThat(fireTofind).isEqualTo(fire);
 
 	}
 
@@ -152,13 +91,14 @@ public class ServiceFireStationTest {
 			"should be returned correctly")
 	public void getFireStationByKeyIdTest()
 			throws Exception {
-		fire1 = new FireStation("29 15th St", 2);
-		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(fire1);
 
-		FireStation fireByIdFound = fireStationService.getFireStationByKeyId(fire1.getAddress(), fire1.getStation());
+		FireStation fire = new FireStation("NewAddress", 1);
 
-//		assertThat(fireByIdFound).isEqualTo(fire1);
-		verify(fireStationRepositoryMock).find(anyString(), anyInt());
+		when(fireStationRepositoryMock.find(anyString(), anyInt())).thenReturn(fire);
+
+		FireStation fireTofind = fireStationService.getFireStationByKeyId(fire.getAddress(), fire.getStation());
+
+		assertThat(fireTofind).isEqualTo(fire);
 
 	}
 }

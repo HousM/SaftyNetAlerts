@@ -30,6 +30,9 @@ public class MedicalRecord {
 
 	}
 
+	public MedicalRecord() {
+	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 

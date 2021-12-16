@@ -29,13 +29,33 @@ public class FireStationRepository {
 	}
 
 	/**
-	 * Adds the given fire station to fireStationMap.
+	 * Adds fire station to fireStationMap.
 	 */
 	public FireStation save(FireStation fireSt) {
 		logger.debug("Inside FireStationRepository.save for fireStation : " + fireSt.getAddress(),
 				fireSt.getStation());
+
 		fireStationMap.put(fireSt.getAddress() + fireSt.getStation(), fireSt);
 		return fireStationMap.get(fireSt.getAddress() + fireSt.getStation());
+
+	}
+
+	/**
+	 * update the given fire station to fireStationMap.
+	 */
+	public FireStation update(FireStation fireSt) {
+		logger.debug("Inside FireStationRepository.update for fireStation : " + fireSt.getAddress(),
+				fireSt.getStation());
+
+		Collection<FireStation> listFireSt = fireStationMap.values();
+		for (FireStation f : listFireSt) {
+			if (f.equals(fireSt))
+
+			{
+				return f;
+			}
+		}
+		return null;
 	}
 
 	/**

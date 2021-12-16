@@ -1,6 +1,7 @@
 package com.openclassrooms.safetynets.alerts.repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ public class MedicalRecordRepository {
 
 	private Logger logger = LogManager.getLogger(MedicalRecordRepository.class);
 	private Map<String, MedicalRecord> medicalRecordsMap = new HashMap<>();
+	private List<MedicalRecord> medicalrecordList;
 
 	@Autowired
 	public MedicalRecordRepository(ReadJsonData dataJson) {
@@ -29,8 +31,22 @@ public class MedicalRecordRepository {
 	public MedicalRecord save(MedicalRecord med) {
 		logger.debug("Inside MedicalRecordRepository.save for : " + med.getFirstName(), med.getLastName());
 		medicalRecordsMap.put(med.getFirstName() + med.getLastName(), med);
-
 		return medicalRecordsMap.get(med.getFirstName() + med.getLastName());
+
+	}
+
+	public MedicalRecord update(MedicalRecord med) {
+		logger.debug("Inside MedicalRecordRepository.update for : " + med.getFirstName(), med.getLastName());
+
+		for (MedicalRecord m : medicalrecordList) {
+			if (m.equals(med))
+
+			{
+				return m;
+			}
+		}
+		return null;
+
 	}
 
 	/**

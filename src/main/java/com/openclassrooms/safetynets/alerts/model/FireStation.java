@@ -12,6 +12,7 @@ public class FireStation {
 	private List<Person> personToSave = new ArrayList<Person>();
 	private List<Person> personAddress;
 	private List<FireStation> households;
+	private List<FireStation> fireStation = new ArrayList<FireStation>();;
 
 	// Default constructor
 	public FireStation(String address, int station) {
@@ -28,6 +29,11 @@ public class FireStation {
 	public FireStation(int station, List<FireStation> households) {
 		this.station = station;
 		this.setHouseholds(households);
+	}
+
+	public void addFireSatation(FireStation fireSt) {
+		fireStation.add(fireSt);
+
 	}
 
 	public void addPerson(Person person) {

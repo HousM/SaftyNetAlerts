@@ -9,11 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-import com.openclassrooms.safetynets.alerts.model.FireStation;
-import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
-import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.repository.ReadJsonData;
 
+@SuppressWarnings("unused")
 public class ModelsTest {
 
 	@Mock

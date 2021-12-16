@@ -85,7 +85,7 @@ public class PersonRepository {
 				personsByAddress.add(person);
 			}
 		}
-
+//		return null;
 		return personsByAddress;
 	}
 
@@ -97,6 +97,20 @@ public class PersonRepository {
 		personsMap.put(personFound.getFirstName() + personFound.getLastName(), personFound);
 
 		return personsMap.get(personFound.getFirstName() + personFound.getLastName());
+	}
+
+	public Person update(Person person) {
+		logger.debug("Inside PersonRepository.save for : " + person.getFirstName(), person.getLastName());
+		Collection<Person> listPerson = personsMap.values();
+		for (Person p : listPerson) {
+			if (p.equals(person))
+
+			{
+				return p;
+			}
+		}
+		return null;
+
 	}
 
 	/**

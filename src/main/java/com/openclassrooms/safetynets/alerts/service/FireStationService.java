@@ -46,9 +46,10 @@ public class FireStationService {
 			throw new Exception("FireStation not found");
 		}
 
-		fireToUpdate.setStation(fireSt.getStation());
+//		fireToUpdate.setStation(fireSt.getStation());
+		FireStation fireUpdate = fireStationRepository.update(fireToUpdate);
 
-		return updateFireStation(fireToUpdate);
+		return fireUpdate;
 	}
 
 	public void deleteFireStation(String address, Integer station) throws Exception {

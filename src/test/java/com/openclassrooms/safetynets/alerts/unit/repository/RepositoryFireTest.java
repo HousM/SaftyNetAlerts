@@ -53,6 +53,16 @@ public class RepositoryFireTest {
 	}
 
 	@Test
+	@Tag("Update")
+	public void givenAFireStation_whenUpdate_thenFireStationShouldBeUpdatedCorrectly() {
+		FireStation fireStationToUpdate = new FireStation("480 Manchester St", 2);
+
+		FireStation fireStationUpdate = fireStationRepository.update(fireStationToUpdate);
+
+		assertThat(fireStationUpdate).isNull();
+	}
+
+	@Test
 	@Tag("Delete")
 	public void givenAFireStation_whenDelete_thenFireStationShouldBeDeleteCorrectly() {
 		fireStationRepository.delete(fire2);

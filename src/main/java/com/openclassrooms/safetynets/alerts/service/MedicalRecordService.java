@@ -53,9 +53,10 @@ public class MedicalRecordService {
 		medFound.setMedicationsList(med.getMedications());
 		medFound.setAllergiesList(med.getAllergies());
 
-		MedicalRecord medtoSaved = medicalRecordRepository.save(medFound);
-		MedicalRecordDTO medSaved = medicalRecordDTO.toMedicalRecordDTO(medtoSaved);
-		return saveMedicalRecord(medSaved);
+//		MedicalRecord medtoSaved = medicalRecordRepository.save(medFound);
+		MedicalRecordDTO medSaved = medicalRecordDTO.toMedicalRecordDTO(medFound);
+
+		return medSaved;
 	}
 
 	public void deleteMedicalRecord(String firstName, String lastName) throws Exception {

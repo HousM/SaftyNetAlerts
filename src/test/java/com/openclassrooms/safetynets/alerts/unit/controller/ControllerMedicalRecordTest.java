@@ -49,17 +49,13 @@ public class ControllerMedicalRecordTest {
 
 	private MedicalRecordDTO medDTO;
 
-	private ObjectMapper objectMapper;
-
-	private MedicalRecord med1;
-
 	@Before
 	public void setUp() {
-		objectMapper = new ObjectMapper();
+		new ObjectMapper();
 
 		medDTO = new MedicalRecordDTO("John", "Boyd", "03/06/1984",
 				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
-		med1 = new MedicalRecord("Tony", "Cooper", "04/20/2002",
+		new MedicalRecord("Tony", "Cooper", "04/20/2002",
 				Arrays.asList("ibupurin:200mg"), Arrays.asList("peanut"));
 
 	}
@@ -90,6 +86,8 @@ public class ControllerMedicalRecordTest {
 	@Test
 	public void updateMedicalRecordTest() throws Exception {
 		medDTO1 = new MedicalRecordDTO("John1", "Boyd", "03/06/1984",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
+		new MedicalRecord("John1", "Boyd", "03/06/1984",
 				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 		rep1 = new ResponseEntity<>(medDTO1, HttpStatus.OK);
 		when(medicalRecordService.updateMedicalRecord(medDTO1))
