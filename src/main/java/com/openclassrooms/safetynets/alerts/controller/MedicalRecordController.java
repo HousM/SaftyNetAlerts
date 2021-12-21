@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.safetynets.alerts.dto.MedicalRecordDTO;
+import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.service.MedicalRecordService;
 
 @RestController
@@ -32,7 +32,7 @@ public class MedicalRecordController {
 	 */
 
 	@GetMapping("/medicalRecord")
-	public ResponseEntity<MedicalRecordDTO> getMedicalRecord(@RequestParam("firstName") String firstName,
+	public ResponseEntity<MedicalRecord> getMedicalRecord(@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName) throws Exception {
 		logger.debug("MedicalRecord GET Request on : {} {}", firstName, lastName);
 
@@ -40,7 +40,7 @@ public class MedicalRecordController {
 				|| lastName.trim().length() == 0) {
 			throw new Exception("Bad request : missing or incomplete parameter");
 		}
-		MedicalRecordDTO medDTO = medicalRecordService.getMedicalRecordById(firstName, lastName);
+		MedicalRecord medDTO = medicalRecordService.getMedicalRecordById(firstName, lastName);
 
 		logger.info("MedicalRecord GET Request - SUCCESS");
 		return new ResponseEntity<>(medDTO, HttpStatus.OK);
@@ -50,14 +50,14 @@ public class MedicalRecordController {
 	 * Adds a new medicalRecord.
 	 */
 	@PostMapping("/medicalRecord")
-	public ResponseEntity<MedicalRecordDTO> saveMedicalRecord(@RequestBody MedicalRecordDTO med) throws Exception {
+	public ResponseEntity<MedicalRecord> saveMedicalRecord(@RequestBody MedicalRecord med) throws Exception {
 		logger.debug("MedicalRecord POST Request on : " + med.getFirstName() + " " + med.getLastName());
 
 		if (med.getFirstName() == null || med.getFirstName().isEmpty() || med.getLastName() == null ||
 				med.getLastName().isEmpty()) {
 			throw new Exception("Bad request : missing or incomplete body request");
 		}
-		MedicalRecordDTO medicalRecordCreated = medicalRecordService.saveMedicalRecord(med);
+		MedicalRecord medicalRecordCreated = medicalRecordService.saveMedicalRecord(med);
 
 		logger.info("MedicalRecord POST request - SUCCESS");
 		return new ResponseEntity<>(medicalRecordCreated, HttpStatus.CREATED);
@@ -68,14 +68,14 @@ public class MedicalRecordController {
 	 */
 
 	@PutMapping("/medicalRecord")
-	public ResponseEntity<MedicalRecordDTO> updateMedicalRecord(@RequestBody MedicalRecordDTO med) throws Exception {
+	public ResponseEntity<MedicalRecord> updateMedicalRecord(@RequestBody MedicalRecord med) throws Exception {
 		logger.debug("MedicalRecord PUT Request on : " + med.getFirstName() + " " + med.getLastName());
 
 		if (med.getFirstName() == null || med.getFirstName().isEmpty() || med.getLastName() == null ||
 				med.getLastName().isEmpty()) {
 			throw new Exception("Bad request : missing or incomplete body request");
 		}
-		MedicalRecordDTO medicalRecordUpdated = medicalRecordService.updateMedicalRecord(med);
+		MedicalRecord medicalRecordUpdated = medicalRecordService.updateMedicalRecord(med);
 
 		logger.info("MedicalRecord PUT request - SUCCESS");
 		return new ResponseEntity<>(medicalRecordUpdated, HttpStatus.OK);

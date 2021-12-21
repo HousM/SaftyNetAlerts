@@ -25,7 +25,7 @@ public class MedicalRecordService {
 	private MedicalRecordRepository medicalRecordRepository;
 	private MedicalRecordDTO medicalRecordDTO;
 
-	public MedicalRecordDTO saveMedicalRecord(MedicalRecordDTO med) throws Exception {
+	public MedicalRecord saveMedicalRecord(MedicalRecord med) throws Exception {
 		logger.debug("Inside MedicalRecordService.createMedicalRecord for: " + med.getFirstName(), med.getLastName());
 
 		MedicalRecord medFound = medicalRecordRepository.findByIdentity(med.getFirstName(),
@@ -35,28 +35,27 @@ public class MedicalRecordService {
 			throw new Exception("MedicalRecord already registered");
 		}
 
-		MedicalRecord medtoSaved = medicalRecordRepository.save(medFound);
-		MedicalRecordDTO medSaved = medicalRecordDTO.toMedicalRecordDTO(medtoSaved);
+		MedicalRecord medSaved = medicalRecordRepository.save(med);
+		return new MedicalRecord(medSaved.getFirstName(), medSaved.getLastName(), medSaved.getBirthdate(),
+				medSaved.getMedicationsList(), medSaved.getAllergiesList());
+//		MedicalRecordDTO medSaved = medicalRecordDTO.toMedicalRecordDTO(medtoSaved);
 
-		return medSaved;
+//		return medSaved;
 	}
 
-	public MedicalRecordDTO updateMedicalRecord(MedicalRecordDTO med) throws Exception {
+	public MedicalRecord updateMedicalRecord(MedicalRecord med) throws Exception {
 		logger.debug("Inside MedicalRecordService.updateMedicalRecord for: " + med.getFirstName(), med.getLastName());
-		MedicalRecord medFound = medicalRecordRepository.findByIdentity(med.getFirstName(),
+		MedicalRecord medToUpdate = medicalRecordRepository.findByIdentity(med.getFirstName(),
 				med.getLastName());
 
-		if (medFound == null) {
+		if (medToUpdate == null) {
 			throw new Exception("MedicalRecord not found");
 		}
-		medFound.setBirthdate(med.getBirthDate());
-		medFound.setMedicationsList(med.getMedications());
-		medFound.setAllergiesList(med.getAllergies());
 
-//		MedicalRecord medtoSaved = medicalRecordRepository.save(medFound);
-		MedicalRecordDTO medSaved = medicalRecordDTO.toMedicalRecordDTO(medFound);
+		MedicalRecord medUpdated = medicalRecordRepository.update(med);
+//		MedicalRecord medSaved = medicalRecord.toMedicalRecordDTO(medFound);
 
-		return medSaved;
+		return medUpdated;
 	}
 
 	public void deleteMedicalRecord(String firstName, String lastName) throws Exception {
@@ -69,7 +68,7 @@ public class MedicalRecordService {
 		medicalRecordRepository.delete(medicalRecordToDelete);
 	}
 
-	public MedicalRecordDTO getMedicalRecordById(String firstName, String lastName) throws Exception {
+	public MedicalRecord getMedicalRecordById(String firstName, String lastName) throws Exception {
 		logger.debug("Inside MedicalRecordService.getMedicalRecordByID for {} {}",
 				firstName, lastName);
 		MedicalRecord medicalRecord = medicalRecordRepository.findByIdentity(firstName, lastName);
@@ -77,8 +76,8 @@ public class MedicalRecordService {
 		if (medicalRecord == null) {
 			throw new Exception("Failed to get medicalRecord for : " + firstName + " " + lastName);
 		}
-		MedicalRecordDTO medicalRecorddto = medicalRecordDTO.toMedicalRecordDTO(medicalRecord);
-		return medicalRecorddto;
+
+		return medicalRecord;
 	}
 
 }

@@ -33,9 +33,9 @@ public class FireStationService {
 			throw new Exception("FireStation already registered");
 		}
 
-		FireStation fireSaved = fireStationRepository.save(fireFound);
+		FireStation fireSaved = fireStationRepository.save(fireSt);
 
-		return fireSaved;
+		return new FireStation(fireSaved.getAddress(), fireSaved.getStation());
 	}
 
 	public FireStation updateFireStation(FireStation fireSt) throws Exception {

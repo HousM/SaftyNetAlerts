@@ -33,7 +33,7 @@ public class PersonService {
 			throw new Exception("Person already registered");
 		}
 
-		Person personSaved = personRepository.save(personFound);
+		Person personSaved = personRepository.save(pers);
 
 		return personSaved;
 	}
@@ -46,13 +46,7 @@ public class PersonService {
 			throw new Exception("Person not found");
 		}
 
-		personFound.setAddress(pers.getAddress());
-		personFound.setCity(pers.getCity());
-		personFound.setZip(pers.getZip());
-		personFound.setPhone(pers.getPhone());
-		personFound.setEmail(pers.getEmail());
-
-		Person personSaved = personRepository.save(personFound);
+		Person personSaved = personRepository.update(personFound);
 		return personSaved;
 	}
 

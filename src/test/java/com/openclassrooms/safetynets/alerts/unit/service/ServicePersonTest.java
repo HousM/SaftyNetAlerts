@@ -1,29 +1,27 @@
 package com.openclassrooms.safetynets.alerts.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.openclassrooms.safetynets.alerts.model.Person;
 import com.openclassrooms.safetynets.alerts.repository.PersonRepository;
 import com.openclassrooms.safetynets.alerts.service.PersonService;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ServicePersonTest {
 
 	@InjectMocks
@@ -39,13 +37,14 @@ public class ServicePersonTest {
 	@DisplayName("Given a registered person, when updatePerson, then person should be updated correctly")
 	public void updatePersonTest()
 			throws Exception {
-		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
+		person = new Person("JohnN", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
 		when(personRepositoryMock.update(any(Person.class))).thenReturn(person);
+		when(personRepositoryMock.findByIdentity(person.getFirstName(), person.getLastName())).thenReturn(person);
+
 		// Act
 		Person result = personService.updatePerson(person);
 		// Assert
-		assertNotNull(result);
 		assertEquals(person, result);
 
 	}
@@ -56,7 +55,7 @@ public class ServicePersonTest {
 	public void deletePersonTest()
 			throws Exception {
 
-		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
+		Person person = new Person("John", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
 		when(personRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(person);
 		personService.deletePerson(person.getFirstName(), person.getLastName());
@@ -68,7 +67,9 @@ public class ServicePersonTest {
 	@DisplayName("verify that, when getList, list is no null")
 	public void getListTest() throws Exception {
 
-		List<Person> personList = new ArrayList<Person>();
+		Person person = new Person("John", "Boyd", "1509 Culver St", "Culver",
+				97451, "841-874-6512", "jaboyd@email.com");
+		personList = Arrays.asList(person);
 		when(personRepositoryMock.getPersonList()).thenReturn(personList);
 		List<Person> result = personService.getPersonList();
 //		assertEquals(personList, result);
@@ -81,7 +82,7 @@ public class ServicePersonTest {
 			"returned correctly")
 	public void getPersonsByCityTest()
 			throws Exception {
-		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
+		Person person = new Person("John", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
 		personList = Arrays.asList(person);
 
@@ -99,13 +100,13 @@ public class ServicePersonTest {
 	public void getPersonsByAddressTest()
 			throws Exception {
 
-		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
+		Person person = new Person("John", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
 		personList = Arrays.asList(person);
 		when(personRepositoryMock.findByAddress(anyString())).thenReturn(personList);
 
 		List<Person> personsByAddress = personService.getPersonsByAddress("1509 Culver St");
-		assertEquals(person, personsByAddress);
+		assertEquals(personList, personsByAddress);
 		assertThat(personsByAddress).isNotNull();
 	}
 
@@ -113,7 +114,7 @@ public class ServicePersonTest {
 	@Tag("getPersonsById")
 	@DisplayName("Given a Person id, when getPersonsById, then expected person should be returned correctly")
 	public void getPersonsByIdTest() throws Exception {
-		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
+		Person person = new Person("John", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
 		when(personRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(person);
 

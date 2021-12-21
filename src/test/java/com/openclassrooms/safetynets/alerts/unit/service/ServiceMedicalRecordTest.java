@@ -5,17 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.Arrays;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.openclassrooms.safetynets.alerts.dto.MedicalRecordDTO;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.repository.MedicalRecordRepository;
 import com.openclassrooms.safetynets.alerts.service.MedicalRecordService;
@@ -29,25 +26,15 @@ public class ServiceMedicalRecordTest {
 	@Mock
 	private MedicalRecordRepository medicalRecordRepositoryMock;
 
-	private static MedicalRecordDTO medDTO;
-	@Mock
-	private static MedicalRecord med;
-
-	@Before
-	static void setup() throws IOException {
-		medDTO = new MedicalRecordDTO("John", "Boyd", "03/06/1984",
-				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
-		med = new MedicalRecord("John", "Boyd", "03/06/1984",
-				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
-	}
-
 	@Test
 	void saveMedicalrecordTest() throws Exception {
 
+		MedicalRecord med = new MedicalRecord("John", "Boyd", "03/06/1984",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
+
 		when(medicalRecordRepositoryMock.save(med)).thenReturn(med);
 
-		MedicalRecordDTO medToCreate = medDTO.toMedicalRecordDTO(med);
-		MedicalRecordDTO medCreated = medicalRecordService.saveMedicalRecord(medToCreate);
+		MedicalRecord medCreated = medicalRecordService.saveMedicalRecord(med);
 
 		assertNotNull(medCreated);
 //		assertThat(medCreated).isEqualTo(medDTO);
@@ -55,25 +42,31 @@ public class ServiceMedicalRecordTest {
 
 	@Test
 	void updateMedicalRecordTest() throws Exception {
+		MedicalRecord med = new MedicalRecord("John", "Boyd", "03/06/1984",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 
 		when(medicalRecordRepositoryMock.update(med)).thenReturn(med);
+		when(medicalRecordRepositoryMock.findByIdentity(med.getFirstName(),
+				med.getLastName())).thenReturn(med);
 
-		MedicalRecordDTO medToSave = medDTO.toMedicalRecordDTO(med);
-		MedicalRecordDTO medUpdated = medicalRecordService.updateMedicalRecord(medToSave);
+//		MedicalRecordDTO medToSave = medDTO.toMedicalRecordDTO(med);
+		MedicalRecord medUpdated = medicalRecordService.updateMedicalRecord(med);
 
-		assertThat(medUpdated.getAllergies().contains("peanut"));
+		assertThat(medUpdated.getAllergiesList().contains("peanut"));
 //		assertThat(medUpdated).isNull();
 
 	}
 
 	@Test
 	void getMedicalRecordByIdTest() throws Exception {
+		MedicalRecord med = new MedicalRecord("John", "Boyd", "03/06/1984",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 
 		when(medicalRecordRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(med);
 
-		MedicalRecordDTO medTofind = medDTO.toMedicalRecordDTO(med);
-		MedicalRecordDTO medByIdFound = medicalRecordService.getMedicalRecordById(medTofind.getFirstName(),
-				medTofind.getLastName());
+//		MedicalRecordDTO medTofind = medDTO.toMedicalRecordDTO(med);
+		MedicalRecord medByIdFound = medicalRecordService.getMedicalRecordById(med.getFirstName(),
+				med.getLastName());
 
 		assertThat(medByIdFound).isEqualTo(medByIdFound);
 //		assertThat(medByIdFound).isNull();
@@ -82,8 +75,10 @@ public class ServiceMedicalRecordTest {
 	@Test
 
 	public void deleteMedicalRecordTest() throws Exception {
-		when(medicalRecordRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(med);
+		MedicalRecord med = new MedicalRecord("John", "Boyd", "03/06/1984",
+				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 
+		when(medicalRecordRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(med);
 		medicalRecordService.deleteMedicalRecord(med.getFirstName(), med.getLastName());
 	}
 }

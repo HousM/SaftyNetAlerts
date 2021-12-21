@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetynets.alerts.controller.MedicalRecordController;
-import com.openclassrooms.safetynets.alerts.dto.MedicalRecordDTO;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.service.MedicalRecordService;
 
@@ -41,19 +40,19 @@ public class ControllerMedicalRecordTest {
 	@Mock
 	private MedicalRecord med;
 	@Mock
-	private ResponseEntity<MedicalRecordDTO> rep1;
+	private ResponseEntity<MedicalRecord> rep1;
 	@Mock
-	private ResponseEntity<MedicalRecordDTO> rep2;
+	private ResponseEntity<MedicalRecord> rep2;
 	@Mock
-	private MedicalRecordDTO medDTO1;
+	private MedicalRecord medDTO1;
 
-	private MedicalRecordDTO medDTO;
+	private MedicalRecord medDTO;
 
 	@Before
 	public void setUp() {
 		new ObjectMapper();
 
-		medDTO = new MedicalRecordDTO("John", "Boyd", "03/06/1984",
+		medDTO = new MedicalRecord("John", "Boyd", "03/06/1984",
 				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 		new MedicalRecord("Tony", "Cooper", "04/20/2002",
 				Arrays.asList("ibupurin:200mg"), Arrays.asList("peanut"));
@@ -64,14 +63,14 @@ public class ControllerMedicalRecordTest {
 	@Tag("POST-MedicalRecord")
 	@DisplayName("Given a MedicalRecord, when POST request, then return Created status")
 	public void givenAMedicalRecord_whenPostRequest_thenReturnCreatedStatus() throws Exception {
-		when(medicalRecordService.saveMedicalRecord(medDTO))
-				.thenReturn(medDTO);
+		when(medicalRecordService.saveMedicalRecord(med))
+				.thenReturn(med);
 
 	}
 
 	@Test
 	public void saveMedicalRecordTest() throws Exception {
-		medDTO1 = new MedicalRecordDTO("John1", "Boyd", "03/06/1984",
+		medDTO1 = new MedicalRecord("John1", "Boyd", "03/06/1984",
 				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 		rep2 = new ResponseEntity<>(medDTO1, HttpStatus.CREATED);
 		when(medicalRecordService.saveMedicalRecord(medDTO1))
@@ -85,7 +84,7 @@ public class ControllerMedicalRecordTest {
 
 	@Test
 	public void updateMedicalRecordTest() throws Exception {
-		medDTO1 = new MedicalRecordDTO("John1", "Boyd", "03/06/1984",
+		medDTO1 = new MedicalRecord("John1", "Boyd", "03/06/1984",
 				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
 		new MedicalRecord("John1", "Boyd", "03/06/1984",
 				Arrays.asList("aznol:350mg"), Arrays.asList("nillacilan"));
