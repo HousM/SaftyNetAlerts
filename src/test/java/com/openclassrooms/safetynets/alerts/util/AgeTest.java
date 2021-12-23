@@ -9,8 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
-
 public class AgeTest {
 	private static AgeCalcul ageCalculator = new AgeCalcul();
 

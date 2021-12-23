@@ -48,13 +48,7 @@ public class ControllerPersonTest {
 	public void givenAPersonToAddWithMissingId_whenPostRequest_thenReturnBadRequestStatus() throws Exception {
 		when(personService.createPerson(person))
 				.thenReturn(person);
-//		String jsonContent = objectMapper.writeValueAsString(person1);
-//		mockMvc.perform(MockMvcRequestBuilders.post("/person")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content(jsonContent))
-//				.andExpect(status().isBadRequest());
-//
-//		verify(personService).createPerson(any(Person.class));
+
 	}
 
 	@Test
@@ -63,27 +57,7 @@ public class ControllerPersonTest {
 
 		when(personService.updatePerson(person))
 				.thenReturn(person);
-		// Arrange
-//		Person personToUpdate = new Person("John2", "Boyd2", "1509 Culver St", "Culver",
-//				97451, "841-874-6512", "jaboyd2@email.com");
-//		String jsonContent = objectMapper.writeValueAsString(personToUpdate);
-//		Person personUpdated = new Person("John2", "Boyd2", "1509 Culver St", "Culver",
-//				97451, "841-874-6512", "jaboyd2@email.com");
-//		when(personService.updatePerson(personUpdated)).thenReturn(personUpdated);
 
-//		// Act
-//		MvcResult result = mockMvc
-//				.perform(MockMvcRequestBuilders.put("/person").contentType(MediaType.APPLICATION_JSON)
-//						.content(jsonContent))
-//				.andExpect(status().isOk()).andReturn();
-//
-//		// Assert
-//		verify(personService).updatePerson(any(Person.class));
-//		Person personResult = objectMapper.readValue(result.getResponse().getContentAsString(),
-//				new TypeReference<Person>() {
-//				});
-//		assertNotNull(personResult);
-//		assertEquals(personToUpdate.getEmail(), personResult.getEmail());
 	}
 
 	@Test

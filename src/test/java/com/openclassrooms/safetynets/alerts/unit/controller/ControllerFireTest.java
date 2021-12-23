@@ -1,6 +1,8 @@
 package com.openclassrooms.safetynets.alerts.unit.controller;
 
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -33,8 +36,6 @@ public class ControllerFireTest {
 	@MockBean
 	private FireStationService fireStationService;
 
-	private ObjectMapper objectMapper;
-
 	private FireStation fire;
 
 	@Mock
@@ -48,7 +49,7 @@ public class ControllerFireTest {
 
 	@Before
 	public void setUp() {
-		objectMapper = new ObjectMapper();
+		new ObjectMapper();
 
 		fire = new FireStation("29 15th St", 2);
 	}
@@ -57,8 +58,15 @@ public class ControllerFireTest {
 	@Tag("POST-FireStation")
 	@DisplayName("Given a FireStation to add, when POST request, then return Created status")
 	public void givenAFireStationToAdd_whenPostRequest_thenReturnCreatedStatus() throws Exception {
-		when(fireStationService.createFireStation(fire)).thenReturn(fire);
+		FireStation firestationToSave = new FireStation("address", 1);
 
+		when(fireStationService.createFireStation(any(FireStation.class))).thenReturn(firestationToSave);
+
+		mockMvc
+				.perform(MockMvcRequestBuilders.post("/firestation")
+						.accept(MediaType.APPLICATION_JSON));
+		ResponseEntity<FireStation> result = fireStationController.createFireStation(firestationToSave);
+		assertNull(result);
 	}
 
 	@Test

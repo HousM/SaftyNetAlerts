@@ -49,11 +49,9 @@ public class ServiceMedicalRecordTest {
 		when(medicalRecordRepositoryMock.findByIdentity(med.getFirstName(),
 				med.getLastName())).thenReturn(med);
 
-//		MedicalRecordDTO medToSave = medDTO.toMedicalRecordDTO(med);
 		MedicalRecord medUpdated = medicalRecordService.updateMedicalRecord(med);
 
 		assertThat(medUpdated.getAllergiesList().contains("peanut"));
-//		assertThat(medUpdated).isNull();
 
 	}
 
@@ -64,12 +62,11 @@ public class ServiceMedicalRecordTest {
 
 		when(medicalRecordRepositoryMock.findByIdentity(anyString(), anyString())).thenReturn(med);
 
-//		MedicalRecordDTO medTofind = medDTO.toMedicalRecordDTO(med);
 		MedicalRecord medByIdFound = medicalRecordService.getMedicalRecordById(med.getFirstName(),
 				med.getLastName());
 
 		assertThat(medByIdFound).isEqualTo(medByIdFound);
-//		assertThat(medByIdFound).isNull();
+
 	}
 
 	@Test

@@ -38,10 +38,19 @@ public class PersonRepository {
 				+ person.getLastName(), person));
 	}
 
+	protected void setPersonList(Map<String, Person> personsMap) {
+		this.personsMap = personsMap;
+	}
+
 	public List<Person> getPersonList() {
 		logger.debug("Inside PersonRepository.getPersonList");
 		Collection<Person> personList = personsMap.values();
-		return new ArrayList<>(personList);
+		List<Person> persons = new ArrayList<>();
+		for (Person person : personList) {
+
+			persons.add(person);
+		}
+		return persons;
 
 	}
 

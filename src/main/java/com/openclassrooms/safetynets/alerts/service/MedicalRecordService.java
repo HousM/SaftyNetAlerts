@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.openclassrooms.safetynets.alerts.dto.MedicalRecordDTO;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.repository.MedicalRecordRepository;
 
@@ -23,7 +22,6 @@ public class MedicalRecordService {
 
 	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
-	private MedicalRecordDTO medicalRecordDTO;
 
 	public MedicalRecord saveMedicalRecord(MedicalRecord med) throws Exception {
 		logger.debug("Inside MedicalRecordService.createMedicalRecord for: " + med.getFirstName(), med.getLastName());
@@ -38,9 +36,6 @@ public class MedicalRecordService {
 		MedicalRecord medSaved = medicalRecordRepository.save(med);
 		return new MedicalRecord(medSaved.getFirstName(), medSaved.getLastName(), medSaved.getBirthdate(),
 				medSaved.getMedicationsList(), medSaved.getAllergiesList());
-//		MedicalRecordDTO medSaved = medicalRecordDTO.toMedicalRecordDTO(medtoSaved);
-
-//		return medSaved;
 	}
 
 	public MedicalRecord updateMedicalRecord(MedicalRecord med) throws Exception {
@@ -53,8 +48,6 @@ public class MedicalRecordService {
 		}
 
 		MedicalRecord medUpdated = medicalRecordRepository.update(med);
-//		MedicalRecord medSaved = medicalRecord.toMedicalRecordDTO(medFound);
-
 		return medUpdated;
 	}
 

@@ -8,6 +8,9 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -100,6 +103,21 @@ public class ServiceFireStationTest {
 		FireStation fireTofind = fireStationService.getFireStationByKeyId(fire.getAddress(), fire.getStation());
 
 		assertThat(fireTofind).isEqualTo(fire);
+
+	}
+
+	@Test
+	public void getAddressesByStationTest()
+			throws Exception {
+
+		FireStation fire = new FireStation("NewAddress", 1);
+		List<FireStation> fireStations = Arrays.asList(fire);
+
+		when(fireStationRepositoryMock.findByStation(anyInt())).thenReturn(fireStations);
+
+		List<String> fireTofind = fireStationService.getAddressesByStation(1);
+
+		assertThat(fireTofind).isEqualTo(Arrays.asList("NewAddress"));
 
 	}
 }

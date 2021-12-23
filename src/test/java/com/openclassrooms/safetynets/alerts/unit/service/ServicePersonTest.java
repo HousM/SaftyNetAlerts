@@ -2,6 +2,7 @@ package com.openclassrooms.safetynets.alerts.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -46,6 +47,20 @@ public class ServicePersonTest {
 		Person result = personService.updatePerson(person);
 		// Assert
 		assertEquals(person, result);
+
+	}
+
+	@Test
+	public void CreatePersonTest()
+			throws Exception {
+		Person person = new Person("JohnN", "Boyd", "1509 Culver St", "Culver",
+				97451, "841-874-6512", "jaboyd@email.com");
+		when(personRepositoryMock.save(any(Person.class))).thenReturn(person);
+
+		// Act
+		Person result = personService.createPerson(person);
+		// Assert
+		assertNotNull(result);
 
 	}
 

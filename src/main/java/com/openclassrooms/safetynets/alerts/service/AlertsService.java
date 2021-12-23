@@ -17,19 +17,25 @@ import com.openclassrooms.safetynets.alerts.dto.PhoneDTO;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.model.Person;
+import com.openclassrooms.safetynets.alerts.repository.PersonRepository;
+import com.openclassrooms.safetynets.alerts.repository.ReadJsonData;
 import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 
 @Service
 public class AlertsService {
 	private Logger logger = LogManager.getLogger(AlertsService.class);
 
+	@Autowired
+	private ReadJsonData dataStore;
+	@Autowired
+	private FireStationService fireStationService;
 	/*** PersonService's class reference. */
 	@Autowired
 	private PersonService personService;
 
 	/*** FireStationService's class reference. */
 	@Autowired
-	private FireStationService fireStationService;
+	private PersonRepository personRepository;
 
 	/*** MedicalRecordService's class reference. */
 	@Autowired
@@ -46,7 +52,12 @@ public class AlertsService {
 		int adultCount = 0;
 		int childCount = 0;
 
-		List<Person> persons = personService.getPersonList();
+		List<Person> persons = dataStore.getPersonList();
+		if (persons == null) {
+			throw new Exception("PersonList null");
+		}
+
+//		List<Person> persons = personService.getPersonList();
 		// Retrieves addresses covered by the given station number
 		List<String> addresses = fireStationService.getAddressesByStation(station);
 		List<Person> list = new ArrayList<>();
@@ -80,6 +91,7 @@ public class AlertsService {
 		}
 
 		return new PersonDTO(list, adultCount, childCount);
+
 	}
 
 	public PersonDTO getPersonByIdentity(String firstName, String lastName) throws Exception {
@@ -112,7 +124,8 @@ public class AlertsService {
 
 	public PhoneDTO getPhonesByStation(int station) throws Exception {
 		logger.debug("Inside AlertsService.getPhonesByStation for station : " + station);
-		List<Person> persons = personService.getPersonList();
+		List<Person> persons = dataStore.getPersonList();
+//		List<Person> persons = personService.getPersonList();
 		// Retrieves addresses covered by the given station number
 		List<String> addresses = fireStationService.getAddressesByStation(station);
 		List<String> phones = new ArrayList<>();

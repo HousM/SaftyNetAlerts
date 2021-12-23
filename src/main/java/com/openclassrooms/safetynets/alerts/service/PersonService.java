@@ -34,8 +34,8 @@ public class PersonService {
 		}
 
 		Person personSaved = personRepository.save(pers);
+		return new Person(personSaved.getFirstName(), personSaved.getLastName());
 
-		return personSaved;
 	}
 
 	public Person updatePerson(Person pers) throws Exception {
