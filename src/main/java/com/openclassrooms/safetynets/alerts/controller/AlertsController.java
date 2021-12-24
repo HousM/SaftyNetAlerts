@@ -10,10 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.dto.FloodDTO;
 import com.openclassrooms.safetynets.alerts.dto.PersonDTO;
-import com.openclassrooms.safetynets.alerts.dto.PhoneDTO;
 import com.openclassrooms.safetynets.alerts.service.AlertsService;
 
 public class AlertsController {
@@ -68,7 +68,7 @@ public class AlertsController {
 	}
 
 	@GetMapping("/phoneAlert")
-	public ResponseEntity<PhoneDTO> getPhonesByStation(@RequestParam("firestation") Integer station)
+	public ResponseEntity<JsonNode> getPhonesByStation(@RequestParam("firestation") Integer station)
 			throws Exception {
 
 		logger.debug("GET Request on /phoneAlert with station number {}", station);
@@ -76,7 +76,7 @@ public class AlertsController {
 		if (station == null) {
 			throw new Exception("Bad request : missing station parameter");
 		}
-		PhoneDTO phoneAlertDTO = alertsService.getPhonesByStation(station);
+		JsonNode phoneAlertDTO = alertsService.getPhonesByStation(station);
 
 		logger.info("GET Request on /phoneAlert - SUCCESS");
 		return new ResponseEntity<>(phoneAlertDTO, HttpStatus.OK);

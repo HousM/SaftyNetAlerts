@@ -37,7 +37,7 @@ public class ServiceMedicalRecordTest {
 		MedicalRecord medCreated = medicalRecordService.saveMedicalRecord(med);
 
 		assertNotNull(medCreated);
-//		assertThat(medCreated).isEqualTo(medDTO);
+
 	}
 
 	@Test

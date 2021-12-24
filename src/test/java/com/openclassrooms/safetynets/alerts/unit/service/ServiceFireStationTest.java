@@ -44,7 +44,6 @@ public class ServiceFireStationTest {
 		FireStation fireToCreate = fireStationService.createFireStation(fire);
 
 		assertNotNull(fireToCreate);
-//		assertThat(fireToCreate).isEqualTo(fire);
 
 	}
 

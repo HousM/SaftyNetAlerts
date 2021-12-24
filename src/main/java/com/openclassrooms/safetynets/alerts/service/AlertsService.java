@@ -3,17 +3,21 @@ package com.openclassrooms.safetynets.alerts.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.dto.FloodDTO;
 import com.openclassrooms.safetynets.alerts.dto.PersonDTO;
-import com.openclassrooms.safetynets.alerts.dto.PhoneDTO;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.model.Person;
@@ -24,6 +28,7 @@ import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 @Service
 public class AlertsService {
 	private Logger logger = LogManager.getLogger(AlertsService.class);
+	ObjectMapper mapper = new ObjectMapper();
 
 	@Autowired
 	private ReadJsonData dataStore;
@@ -33,7 +38,6 @@ public class AlertsService {
 	@Autowired
 	private PersonService personService;
 
-	/*** FireStationService's class reference. */
 	@Autowired
 	private PersonRepository personRepository;
 
@@ -122,26 +126,29 @@ public class AlertsService {
 		return new PersonDTO(personsInfo);
 	}
 
-	public PhoneDTO getPhonesByStation(int station) throws Exception {
+	public JsonNode getPhonesByStation(int station) throws Exception {
 		logger.debug("Inside AlertsService.getPhonesByStation for station : " + station);
-		List<Person> persons = dataStore.getPersonList();
-//		List<Person> persons = personService.getPersonList();
+
 		// Retrieves addresses covered by the given station number
 		List<String> addresses = fireStationService.getAddressesByStation(station);
-		List<String> phones = new ArrayList<>();
+		Set<String> phones = new HashSet<>();
 
 		// Loops the person list to find the persons living at these addresses to get
 		// their phone number and
 		// adds it to an ArrayList.
-		for (Person pers : persons) {
-			for (String address : addresses) {
-				if (pers.getAddress().equals(address)) {
-					phones.add(pers.getPhone());
-				}
+		for (Person pers : personRepository.getPersonList()) {
+			logger.trace("Person pers: {}", pers);
+
+			if (addresses.contains(pers.getAddress())) {
+//				if (pers.getAddress().equals(address)) {
+				phones.add(pers.getPhone());
 			}
+
 		}
 
-		return new PhoneDTO(phones);
+		ArrayNode result = mapper.createArrayNode();
+		phones.stream().forEach(s -> result.addObject().put("phone", s));
+		return result;
 	}
 
 	public FireDTO getPersonsByAddress(String address) throws Exception {

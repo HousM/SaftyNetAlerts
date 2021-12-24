@@ -113,12 +113,4 @@ public class PersonDTO {
 		this.households = households;
 	}
 
-//	public List<Person> getPersonsByStation() {
-//		return personsInfo;
-//	}
-//
-//	public void setPersonsByStation(int station) {
-//		this.station = station;
-//	}
-
 }

@@ -1,5 +1,6 @@
 package com.openclassrooms.safetynets.alerts.unit.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,25 +30,38 @@ public class ControllerPersonTest {
 	@MockBean
 	private PersonService personService;
 
+	private ObjectMapper objectMapper;
 	private Person person;
-
+	private PersonController personController;
 	@Mock
 	private Person person1;
 
 	@Before
 	void setup() {
-		new ObjectMapper();
+		objectMapper = new ObjectMapper();
 		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
-		person1 = new Person("Mark", "Boyd", "1509 Culver St", "Culver",
-				97451, "898-353-6978", "maboyd@email.com");
+		person1 = new Person("John", "Boyd", "1509 Culver St", "Culver",
+				97451, "841-874-6512", "jaboyd@email.com");
+
 	}
 
 	@Test
 	@Tag("POST-Person")
-	public void givenAPersonToAddWithMissingId_whenPostRequest_thenReturnBadRequestStatus() throws Exception {
-		when(personService.createPerson(person))
-				.thenReturn(person);
+	public void testCreatePerson() throws Exception {
+
+		// Arrange
+
+		when(personService.createPerson(any(Person.class))).thenReturn(person);
+
+//		// Act
+//		mockMvc
+//				.perform(MockMvcRequestBuilders.post("/person").contentType(MediaType.APPLICATION_JSON)
+//						.content(objectMapper.writeValueAsString(person)))
+//				.andExpect(status().isCreated()).andReturn();
+//
+//		// Assert
+//		verify(personService).createPerson(any(Person.class));
 
 	}
 

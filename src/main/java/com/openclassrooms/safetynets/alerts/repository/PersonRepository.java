@@ -109,7 +109,7 @@ public class PersonRepository {
 	}
 
 	public Person update(Person person) {
-		logger.debug("Inside PersonRepository.save for : " + person.getFirstName(), person.getLastName());
+		logger.debug("Inside PersonRepository.update for : " + person.getFirstName(), person.getLastName());
 		Collection<Person> listPerson = personsMap.values();
 		for (Person p : listPerson) {
 			if (p.equals(person))

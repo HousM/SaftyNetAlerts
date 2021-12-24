@@ -55,8 +55,6 @@ public class ControllerFireTest {
 	}
 
 	@Test
-	@Tag("POST-FireStation")
-	@DisplayName("Given a FireStation to add, when POST request, then return Created status")
 	public void givenAFireStationToAdd_whenPostRequest_thenReturnCreatedStatus() throws Exception {
 		FireStation firestationToSave = new FireStation("address", 1);
 

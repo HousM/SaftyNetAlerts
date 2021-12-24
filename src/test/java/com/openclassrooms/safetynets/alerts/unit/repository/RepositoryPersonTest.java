@@ -53,6 +53,16 @@ public class RepositoryPersonTest {
 	}
 
 	@Test
+	@Tag("Update")
+	public void UpdateTest() {
+		Person person3 = new Person("John", "Boyd", "1509 Culver St", "Culver",
+				97451, "841-874-6512", "jaboyd@email.com");
+		Person personUpdate = personRepository.update(person3);
+		assertThat(personUpdate).isNull();
+
+	}
+
+	@Test
 	@Tag("Delete")
 	@DisplayName("Given a Person, when delete, then Person should be deleted successfully")
 	public void givenAPerson_whenDelete_thenPersonShouldBeDeleteCorrectly() {

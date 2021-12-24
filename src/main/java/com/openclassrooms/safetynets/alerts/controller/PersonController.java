@@ -25,16 +25,16 @@ public class PersonController {
 
 	// Add a new person
 	@PostMapping("/person")
-	public ResponseEntity<Person> createPerson(@RequestBody Person person) throws Exception {
+	public ResponseEntity<Person> createPerson(@RequestBody final Person person) throws Exception {
 		logger.debug("Person CREATE Request on : " + person.getFirstName() + " " + person.getLastName());
 
 		if (person.getFirstName() == null || person.getFirstName().isEmpty() || person.getLastName() == null
 				|| person.getLastName().isEmpty()) {
 			throw new Exception("Bad request :  missing or incomplete body request");
 		}
-		Person personCreated = personService.updatePerson(person);
+		Person personCreated = personService.createPerson(person);
 
-		logger.info("Person POST request - SUCCESS");
+		logger.info("POST /person response : CREATED");
 		return new ResponseEntity<>(personCreated, HttpStatus.CREATED);
 	}
 

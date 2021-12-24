@@ -57,6 +57,18 @@ public class RepositoryMedicalRecordTest {
 	}
 
 	@Test
+	@Tag("Update")
+	public void UpdateTest() {
+		MedicalRecord med3 = new MedicalRecord("Paul", "Duncan", "02/11/1980",
+				Arrays.asList(""), Arrays.asList("shellfish"));
+
+		MedicalRecord medUpdate = medicalRecordRepository.update(med3);
+
+		assertThat(medUpdate).isNull();
+
+	}
+
+	@Test
 	@Tag("Delete")
 	@DisplayName("Given a MedicalRecord, when delete, then MedicalRecord should be deleted successfully")
 	public void givenAMedicalRecord_whenDelete_thenMedicalRecordShouldBeDeleteCorrectly() {
