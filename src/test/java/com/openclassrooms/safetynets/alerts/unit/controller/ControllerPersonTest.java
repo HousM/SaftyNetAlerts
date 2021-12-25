@@ -30,15 +30,13 @@ public class ControllerPersonTest {
 	@MockBean
 	private PersonService personService;
 
-	private ObjectMapper objectMapper;
 	private Person person;
-	private PersonController personController;
 	@Mock
 	private Person person1;
 
 	@Before
 	void setup() {
-		objectMapper = new ObjectMapper();
+		new ObjectMapper();
 		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
 		person1 = new Person("John", "Boyd", "1509 Culver St", "Culver",
@@ -53,15 +51,6 @@ public class ControllerPersonTest {
 		// Arrange
 
 		when(personService.createPerson(any(Person.class))).thenReturn(person);
-
-//		// Act
-//		mockMvc
-//				.perform(MockMvcRequestBuilders.post("/person").contentType(MediaType.APPLICATION_JSON)
-//						.content(objectMapper.writeValueAsString(person)))
-//				.andExpect(status().isCreated()).andReturn();
-//
-//		// Assert
-//		verify(personService).createPerson(any(Person.class));
 
 	}
 
