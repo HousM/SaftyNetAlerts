@@ -25,7 +25,7 @@ public class PersonController {
 
 	// Add a new person
 	@PostMapping("/person")
-	public ResponseEntity<Person> createPerson(@RequestBody final Person person) throws Exception {
+	public ResponseEntity<Person> createPerson(@RequestBody Person person) throws Exception {
 		logger.debug("Person CREATE Request on : " + person.getFirstName() + " " + person.getLastName());
 
 		if (person.getFirstName() == null || person.getFirstName().isEmpty() || person.getLastName() == null
@@ -70,7 +70,7 @@ public class PersonController {
 	}
 
 	// Retrieves a stored person
-	@GetMapping("/person")
+	@GetMapping("/person/")
 	public ResponseEntity<Person> getPerson(@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") final String lastName) throws Exception {
 		logger.debug("Person GET Request on : {} {}", firstName, lastName);

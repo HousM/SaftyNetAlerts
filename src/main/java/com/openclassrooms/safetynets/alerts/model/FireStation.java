@@ -3,9 +3,6 @@ package com.openclassrooms.safetynets.alerts.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-
-@JsonFilter("monFiltreDynamique")
 public class FireStation {
 	private String address;
 	private int station;

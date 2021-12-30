@@ -2,9 +2,6 @@ package com.openclassrooms.safetynets.alerts.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-
-@JsonFilter("monFiltreDynamique")
 public class Person {
 
 	private String firstName;
