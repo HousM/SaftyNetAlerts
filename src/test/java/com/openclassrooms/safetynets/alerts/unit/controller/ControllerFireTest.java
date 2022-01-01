@@ -1,8 +1,6 @@
 package com.openclassrooms.safetynets.alerts.unit.controller;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
@@ -51,20 +49,20 @@ public class ControllerFireTest {
 	public void setUp() {
 		new ObjectMapper();
 
-		fire = new FireStation("29 15th St", 2);
+		fire = new FireStation("1509 Culver St", 3);
 	}
 
 	@Test
+	@Tag("POST-FireStation")
 	public void givenAFireStationToAdd_whenPostRequest_thenReturnCreatedStatus() throws Exception {
-		FireStation firestationToSave = new FireStation("address", 1);
 
-		when(fireStationService.createFireStation(any(FireStation.class))).thenReturn(firestationToSave);
+		String firestationRecord = "{\"station\":\"30\",\"address\":\"4 Binocle Ave\"}";
+		when(fireStationService.createFireStation(fire)).thenReturn(fire);
+		mockMvc.perform(MockMvcRequestBuilders.post("/firestation")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(firestationRecord))
+				.andExpect(status().is(201));
 
-		mockMvc
-				.perform(MockMvcRequestBuilders.post("/firestation")
-						.accept(MediaType.APPLICATION_JSON));
-		ResponseEntity<FireStation> result = fireStationController.createFireStation(firestationToSave);
-		assertNull(result);
 	}
 
 	@Test
@@ -82,7 +80,12 @@ public class ControllerFireTest {
 	@Tag("PUT-FireStation")
 	@DisplayName("Given a FireStation to update, when PUT request, then return Ok status")
 	public void givenAFireStationToUpdate_whenPutRequest_thenReturnOkStatus() throws Exception {
+		String firestationRecord = "{\"station\":\"30\",\"address\":\"4 Binocle Ave\"}";
 		when(fireStationService.updateFireStation(fire)).thenReturn(fire);
+		mockMvc.perform(MockMvcRequestBuilders.put("/firestation")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(firestationRecord))
+				.andExpect(status().isOk());
 
 	}
 
@@ -101,7 +104,6 @@ public class ControllerFireTest {
 
 	@Test
 	@Tag("DELETE-FireStation")
-	@DisplayName("Given a valid FireStation key ID, when DELETE request, then return OK status")
 	public void givenValidIdKeyId_whenDeleteRequest_thenReturnOkStatus() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.delete("/firestation")
 				.param("address", "29 15th St")
@@ -112,17 +114,14 @@ public class ControllerFireTest {
 	}
 
 	@Test
-	@Tag("GET-FireStation")
-	@DisplayName("Given valid key ID, when GET request, then return OK status")
+	@Tag("GET-Firestation")
 	public void givenValidIdParam_whenGetRequest_thenReturnOkStatus() throws Exception {
-		when(fireStationService.getFireStationByKeyId(anyString(), anyInt())).thenReturn(fire);
-
-		mockMvc.perform(MockMvcRequestBuilders.get("/fireStation")
-				.param("address", "29 15th St")
-				.param("station", "2"))
+		when(fireStationService.getFireStationByKeyId("1509 Culver St", 3)).thenReturn(fire);
+		mockMvc.perform(MockMvcRequestBuilders.get("/firestation")
+				.param("address", "1509 Culver St")
+				.param("station", "3"))
 				.andExpect(status().isOk());
 
-		verify(fireStationService).getFireStationByKeyId(anyString(), anyInt());
 	}
 
 	@Test

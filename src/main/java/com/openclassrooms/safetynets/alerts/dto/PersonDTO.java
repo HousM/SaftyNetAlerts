@@ -11,8 +11,6 @@ public class PersonDTO {
 	 * The list of persons covered by the given fire station number.
 	 */
 	private List<Person> person;
-	private List<Person> personsInfo;
-
 	/**
 	 * Count of adults inside the list of persons covered by the given fire station
 	 * number.
@@ -43,6 +41,12 @@ public class PersonDTO {
 
 	public PersonDTO(String address, List<Person> personAddress) {
 		this.setAddress(address);
+		this.setPersonAddress(personAddress);
+
+	}
+
+	public PersonDTO(Integer station, List<Person> personAddress) {
+		this.setStation(station);
 		this.setPersonAddress(personAddress);
 
 	}

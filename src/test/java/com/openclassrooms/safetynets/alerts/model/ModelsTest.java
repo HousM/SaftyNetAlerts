@@ -48,6 +48,9 @@ public class ModelsTest {
 	private PersonDTO persondto3;
 
 	@Mock
+	private PersonDTO persondto4;
+
+	@Mock
 	private FireStation fire2;
 	@Mock
 	private List<Person> personAddress = Arrays.asList(person1, person2);
@@ -65,6 +68,7 @@ public class ModelsTest {
 	@Mock
 	private MedicalRecordDTO meddto1;
 
+	private FireDTO firedto;
 	@Mock
 	private FireDTO firedto1;
 
@@ -102,6 +106,7 @@ public class ModelsTest {
 		persondto1 = new PersonDTO("29 15th St", personAddress);
 		persondto2 = new PersonDTO(1, households);
 		persondto3 = new PersonDTO(personAddress);
+		persondto4 = new PersonDTO(2, Arrays.asList(person, person2));
 		firedto1 = new FireDTO(1, Arrays.asList(person, person2));
 		firedto2 = new FireDTO("29 15th St", 2);
 		phone = new PhoneDTO(Arrays.asList("00000000", "06060606"));
@@ -140,7 +145,8 @@ public class ModelsTest {
 		assertNotNull(persondto1.getPersonAddress());
 
 		assertNotNull(persondto2.getHouseholds());
-		assertNotNull(persondto2.getStation());
+		assertNotNull(persondto4.getStation());
+		assertNotNull(persondto4.getPersonAddress());
 
 //		assertNotNull(persondto3.getPersonInfo());
 //		assertNotNull(persondto3.getPersonsByStation());
@@ -149,6 +155,7 @@ public class ModelsTest {
 		assertNotNull(firedto1.getPersons());
 		assertNotNull(firedto2.getAddress());
 		assertNotNull(firedto2.getStation());
+		assertNotNull(firedto1.toFireDTO(fire1));
 
 		assertNotNull(phone.getPhones());
 		assertNotNull(flood1.getHouseholds());

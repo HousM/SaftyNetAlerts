@@ -9,13 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.dto.FloodDTO;
 import com.openclassrooms.safetynets.alerts.dto.PersonDTO;
 import com.openclassrooms.safetynets.alerts.service.AlertsService;
 
+@RestController
 public class AlertsController {
 
 	private Logger logger = LogManager.getLogger(AlertsController.class);
@@ -23,7 +24,7 @@ public class AlertsController {
 	@Autowired
 	private AlertsService alertsService;
 
-	@GetMapping("/firestation")
+	@GetMapping("/persondto")
 
 	public ResponseEntity<PersonDTO> getPersonsByStation(@RequestParam("stationNumber") Integer station)
 			throws Exception {
@@ -38,7 +39,7 @@ public class AlertsController {
 		return new ResponseEntity<>(personsByStationDTO, HttpStatus.OK);
 	}
 
-	@GetMapping("/fire")
+	@GetMapping("/firedto")
 	public ResponseEntity<FireDTO> getPersonsByAddress(@RequestParam("address") String address) throws Exception {
 
 		logger.debug("GET Request on /fire with address {}", address);
@@ -65,21 +66,6 @@ public class AlertsController {
 
 		logger.info("GET Request on /flood - SUCCESS");
 		return new ResponseEntity<>(floodDTO, HttpStatus.OK);
-	}
-
-	@GetMapping("/phoneAlert")
-	public ResponseEntity<JsonNode> getPhonesByStation(@RequestParam("firestation") Integer station)
-			throws Exception {
-
-		logger.debug("GET Request on /phoneAlert with station number {}", station);
-
-		if (station == null) {
-			throw new Exception("Bad request : missing station parameter");
-		}
-		JsonNode phoneAlertDTO = alertsService.getPhonesByStation(station);
-
-		logger.info("GET Request on /phoneAlert - SUCCESS");
-		return new ResponseEntity<>(phoneAlertDTO, HttpStatus.OK);
 	}
 
 	@GetMapping("/personInfo")

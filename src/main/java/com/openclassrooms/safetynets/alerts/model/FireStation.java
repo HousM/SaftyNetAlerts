@@ -18,6 +18,9 @@ public class FireStation {
 		this.station = station;
 	}
 
+	public FireStation() {
+	}
+
 	public FireStation(String address, List<Person> personAddress) {
 		this.address = address;
 		this.setPersonAddress(personAddress);

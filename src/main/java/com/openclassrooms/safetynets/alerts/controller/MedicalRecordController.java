@@ -40,10 +40,10 @@ public class MedicalRecordController {
 				|| lastName.trim().length() == 0) {
 			throw new Exception("Bad request : missing or incomplete parameter");
 		}
-		MedicalRecord medDTO = medicalRecordService.getMedicalRecordById(firstName, lastName);
+		MedicalRecord med = medicalRecordService.getMedicalRecordById(firstName, lastName);
 
 		logger.info("MedicalRecord GET Request - SUCCESS");
-		return new ResponseEntity<>(medDTO, HttpStatus.OK);
+		return new ResponseEntity<>(med, HttpStatus.OK);
 	}
 
 	/**

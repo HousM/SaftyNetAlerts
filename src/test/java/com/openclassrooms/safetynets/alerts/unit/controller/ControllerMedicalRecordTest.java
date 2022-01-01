@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -63,9 +64,14 @@ public class ControllerMedicalRecordTest {
 	@Tag("POST-MedicalRecord")
 	@DisplayName("Given a MedicalRecord, when POST request, then return Created status")
 	public void givenAMedicalRecord_whenPostRequest_thenReturnCreatedStatus() throws Exception {
+		String medicalRecords = "{\"firstName\":\"Sylvanas\",\"lastName\":\"Coursevent\",\"birthdate\":\"05/04/1950\",\"medications\":\"dodoxadin:30mg\",\"allergies\":\"peanut\"}";
+
 		when(medicalRecordService.saveMedicalRecord(med))
 				.thenReturn(med);
-
+		mockMvc.perform(MockMvcRequestBuilders.post("/medicalRecord")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(medicalRecords))
+				.andExpect(status().is(201));
 	}
 
 	@Test
@@ -98,19 +104,20 @@ public class ControllerMedicalRecordTest {
 
 	}
 
-//	@Test
-//	@Tag("PUT-MedicalRecord")
-//	@DisplayName("Given a MedicalRecord to update, when PUT request, then return Ok status")
-//	public void givenAMedicalRecordToUpdate_whenPutRequest_thenReturnOkStatus() throws Exception {
-//		when(medicalRecordService.updateMedicalRecord(medDTO))
-//				.thenReturn(medDTO);
-//		mockMvc.perform(MockMvcRequestBuilders.put("/medicalRecord")
-//				.contentType(MediaType.APPLICATION_JSON)
-//				.content(objectMapper.writeValueAsString(medDTO)))
-//				.andExpect(status().isOk());
-//
-//		verify(medicalRecordService).updateMedicalRecord(medDTO);
-//	}
+	@Test
+	@Tag("PUT-MedicalRecord")
+	@DisplayName("Given a MedicalRecord to update, when PUT request, then return Ok status")
+	public void givenAMedicalRecordToUpdate_whenPutRequest_thenReturnOkStatus() throws Exception {
+		String medicalRecords = "{\"firstName\":\"Sylvanas\",\"lastName\":\"Coursevent\",\"birthdate\":\"05/04/1950\",\"medications\":\"dodoxadin:30mg\",\"allergies\":\"peanut\"}";
+
+		when(medicalRecordService.updateMedicalRecord(medDTO))
+				.thenReturn(medDTO);
+		mockMvc.perform(MockMvcRequestBuilders.put("/medicalRecord")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(medicalRecords))
+				.andExpect(status().isOk());
+
+	}
 
 	@Test
 	@Tag("DELETE-MedicalRecord")

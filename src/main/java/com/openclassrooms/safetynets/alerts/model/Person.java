@@ -57,6 +57,9 @@ public class Person {
 		this.setAllergiesList(allergiesList);
 	}
 
+	public Person() {
+	}
+
 	public Person(String lastName, String phone, int age, List<String> medicationsList,
 			List<String> allergiesList) {
 		this.lastName = lastName;

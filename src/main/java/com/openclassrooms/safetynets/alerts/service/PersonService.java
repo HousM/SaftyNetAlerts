@@ -54,7 +54,7 @@ public class PersonService {
 	 * Retrieve the person with the given identity by calling PersonRepository's
 	 */
 	public Person getPersonById(String firstName, String lastName) throws Exception {
-		logger.debug("Inside PersonService.getPerson for address : " + firstName, lastName);
+		logger.debug("Inside PersonService.getPerson by ID : " + firstName, lastName);
 
 		Person person = personRepository.findByIdentity(firstName, lastName);
 

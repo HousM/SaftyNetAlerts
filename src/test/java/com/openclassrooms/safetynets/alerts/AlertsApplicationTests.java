@@ -8,6 +8,7 @@ class AlertsApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println(" Test Load Context ");
 	}
 
 }

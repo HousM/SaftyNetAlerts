@@ -13,12 +13,14 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetynets.alerts.controller.PersonController;
 import com.openclassrooms.safetynets.alerts.model.Person;
+import com.openclassrooms.safetynets.alerts.repository.PersonRepository;
 import com.openclassrooms.safetynets.alerts.service.PersonService;
 
 @WebMvcTest(controllers = PersonController.class)
@@ -26,6 +28,8 @@ public class ControllerPersonTest {
 
 	@Autowired
 	private MockMvc mockMvc;
+	@MockBean
+	private PersonRepository personRepository;
 
 	@MockBean
 	private PersonService personService;
@@ -37,6 +41,7 @@ public class ControllerPersonTest {
 	@Before
 	void setup() {
 		new ObjectMapper();
+
 		person = new Person("John", "Boyd", "1509 Culver St", "Culver",
 				97451, "841-874-6512", "jaboyd@email.com");
 		person1 = new Person("John", "Boyd", "1509 Culver St", "Culver",
@@ -47,10 +52,16 @@ public class ControllerPersonTest {
 	@Test
 	@Tag("POST-Person")
 	public void testCreatePerson() throws Exception {
-
 		// Arrange
 
-		when(personService.createPerson(any(Person.class))).thenReturn(person);
+		String personRecord = "{\"firstName\":\"Peter\",\"lastName\":\"Duncan\",\"address\":\"644 Gershwin Cir\",\"city\":\"Culver\",\"zip\":\"97451\",\"phone\":\"841-874-6512\",\"email\":\"jaboyd@email.com\"}";
+
+		when(personRepository.save(any(Person.class))).thenReturn(person);
+
+		mockMvc.perform(MockMvcRequestBuilders.post("/person")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(personRecord))
+				.andExpect(status().is(201));
 
 	}
 
@@ -58,9 +69,14 @@ public class ControllerPersonTest {
 	@Tag("PUT-Person")
 	void testPutPerson() throws Exception {
 
+		String personRecord = "{\"firstName\":\"Peter\",\"lastName\":\"Duncan\",\"address\":\"644 Gershwin Cir\",\"city\":\"Culver\",\"zip\":\"97451\",\"phone\":\"841-874-6512\",\"email\":\"jaboyd@email.com\"}";
 		when(personService.updatePerson(person))
 				.thenReturn(person);
 
+		mockMvc.perform(MockMvcRequestBuilders.put("/person")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(personRecord))
+				.andExpect(status().isOk());
 	}
 
 	@Test
@@ -77,15 +93,14 @@ public class ControllerPersonTest {
 
 	@Test
 	@Tag("GET-Person")
-	public void givenValidPersonIdParam_whenGetRequest_thenReturnOkStatus() throws Exception {
+	public void TestGetPerson() throws Exception {
 		when(personService.getPersonById(anyString(), anyString())).thenReturn(person);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/person")
+		mockMvc.perform(MockMvcRequestBuilders.get("/person/")
 				.param("firstName", "John")
 				.param("lastName", "Boyd"))
 				.andExpect(status().isOk());
 
-		verify(personService).getPersonById(anyString(), anyString());
 	}
 
 }

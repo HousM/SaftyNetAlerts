@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.openclassrooms.safetynets.alerts.model.Person;
+import com.openclassrooms.safetynets.alerts.repository.PersonRepository;
 import com.openclassrooms.safetynets.alerts.service.PersonService;
 
 @RestController
@@ -22,6 +23,8 @@ public class PersonController {
 
 	@Autowired
 	private PersonService personService;
+	@Autowired
+	private PersonRepository personRepository;
 
 	// Add a new person
 	@PostMapping("/person")
@@ -32,7 +35,8 @@ public class PersonController {
 				|| person.getLastName().isEmpty()) {
 			throw new Exception("Bad request :  missing or incomplete body request");
 		}
-		Person personCreated = personService.createPerson(person);
+//		Person personCreated = personService.createPerson(person);
+		Person personCreated = personRepository.save(person);
 
 		logger.info("POST /person response : CREATED");
 		return new ResponseEntity<>(personCreated, HttpStatus.CREATED);
@@ -72,17 +76,17 @@ public class PersonController {
 	// Retrieves a stored person
 	@GetMapping("/person/")
 	public ResponseEntity<Person> getPerson(@RequestParam("firstName") String firstName,
-			@RequestParam("lastName") final String lastName) throws Exception {
+			@RequestParam("lastName") String lastName) throws Exception {
 		logger.debug("Person GET Request on : {} {}", firstName, lastName);
 
 		if (firstName == null || firstName.trim().length() == 0 || lastName == null
 				|| lastName.trim().length() == 0) {
 			throw new Exception("Bad request : missing or incomplete parameter");
 		}
-		Person personDTO = personService.getPersonById(firstName, lastName);
+		Person person = personService.getPersonById(firstName, lastName);
 
 		logger.info("Person GET Request - SUCCESS");
-		return new ResponseEntity<>(personDTO, HttpStatus.OK);
+		return new ResponseEntity<>(person, HttpStatus.OK);
 	}
 
 }

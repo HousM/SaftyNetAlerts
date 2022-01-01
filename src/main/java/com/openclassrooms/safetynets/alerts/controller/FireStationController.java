@@ -26,7 +26,7 @@ public class FireStationController {
 	@Autowired
 	private FireStationService fireStationService;
 
-	@GetMapping("/fireStation")
+	@GetMapping("/firestation")
 	public ResponseEntity<FireStation> getFireStation(@RequestParam("address") String address,
 			@RequestParam("station") Integer station) throws Exception {
 		logger.debug("FireStation GET Request on : {} {}", address, station);
@@ -34,10 +34,10 @@ public class FireStationController {
 		if (address == null || address.trim().length() == 0 || station == null) {
 			throw new Exception("Bad request : missing or incomplete parameter");
 		}
-		FireStation fireDTO = fireStationService.getFireStationByKeyId(address, station);
+		FireStation fire = fireStationService.getFireStationByKeyId(address, station);
 
 		logger.info("FireStation GET Request - SUCCESS");
-		return new ResponseEntity<>(fireDTO, HttpStatus.OK);
+		return new ResponseEntity<>(fire, HttpStatus.OK);
 	}
 
 	@PostMapping("/firestation")
