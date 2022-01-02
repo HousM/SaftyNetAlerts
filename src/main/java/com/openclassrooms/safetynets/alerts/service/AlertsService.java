@@ -17,7 +17,6 @@ import com.openclassrooms.safetynets.alerts.dto.PersonDTO;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.model.Person;
-import com.openclassrooms.safetynets.alerts.repository.PersonRepository;
 import com.openclassrooms.safetynets.alerts.repository.ReadJsonData;
 import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 
@@ -33,9 +32,6 @@ public class AlertsService {
 	/*** PersonService's class reference. */
 	@Autowired
 	private PersonService personService;
-
-	@Autowired
-	private PersonRepository personRepository;
 
 	/*** MedicalRecordService's class reference. */
 	@Autowired
