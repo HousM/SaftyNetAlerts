@@ -1,5 +1,6 @@
 package com.openclassrooms.safetynets.alerts.unit.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -20,12 +21,16 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.safetynets.alerts.controller.AlertsController;
+import com.openclassrooms.safetynets.alerts.dto.ChildDTO;
+import com.openclassrooms.safetynets.alerts.dto.CommunityEmailDTO;
 import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.dto.FloodDTO;
 import com.openclassrooms.safetynets.alerts.dto.PersonDTO;
+import com.openclassrooms.safetynets.alerts.dto.PersonInfoDTO;
 import com.openclassrooms.safetynets.alerts.dto.PhoneDTO;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
 import com.openclassrooms.safetynets.alerts.model.Person;
+import com.openclassrooms.safetynets.alerts.model.PersonInfo;
 import com.openclassrooms.safetynets.alerts.service.AlertsService;
 import com.openclassrooms.safetynets.alerts.service.FireStationService;
 import com.openclassrooms.safetynets.alerts.service.PersonService;
@@ -78,7 +83,7 @@ public class ControllerAlertsTest {
 		when(fireStationService.getAddressesByStation(anyInt())).thenReturn(Arrays.asList("1509 Culver St"));
 		when(alertsService.getPersonsByStation(anyInt())).thenReturn(perdto1);
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/persondto")
+		mockMvc.perform(MockMvcRequestBuilders.get("/fireStation")
 				.contentType(MediaType.APPLICATION_JSON)
 				.param("stationNumber", "3"))
 				.andExpect(status().isOk());
@@ -90,7 +95,7 @@ public class ControllerAlertsTest {
 
 		FireDTO fire = new FireDTO("Adresse", 1);
 		when(alertsService.getPersonsByAddress(anyString())).thenReturn(fire);
-		mockMvc.perform(MockMvcRequestBuilders.get("/firedto")
+		mockMvc.perform(MockMvcRequestBuilders.get("/fire")
 				.contentType(MediaType.APPLICATION_JSON)
 				.param("address", "1509 Culver St"))
 				.andExpect(status().isOk());
@@ -112,14 +117,46 @@ public class ControllerAlertsTest {
 
 	@Test
 	public void getPersonInfoByIdentityTest() throws Exception {
-		PersonDTO persondto = new PersonDTO(Arrays.asList(new Person("Boyd", "1509 Culver St",
+		PersonInfoDTO personInfo = new PersonInfoDTO(Arrays.asList(new PersonInfo("Boyd", "1509 Culver St",
 				22, "jaboyd@email.com", Arrays.asList(""), Arrays.asList("peanut"))));
-		when(alertsService.getPersonByIdentity(anyString(), anyString())).thenReturn(persondto);
-
+		when(alertsService.getPersonByIdentity(anyString(), anyString())).thenReturn(personInfo);
 		mockMvc.perform(MockMvcRequestBuilders.get("/personInfo")
 				.contentType(MediaType.APPLICATION_JSON)
 				.param("firstName", "John")
 				.param("lastName", "Boyd"))
+				.andExpect(status().isOk());
+
+	}
+
+	@Test
+	public void getChildByAddressTest() throws Exception {
+		when(alertsService.getChildByAddress(anyString())).thenReturn(any(ChildDTO.class));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/childAlert")
+				.contentType(MediaType.APPLICATION_JSON)
+				.param("address", "29 15th St"))
+				.andExpect(status().isOk());
+
+	}
+
+	@Test
+	public void getPhonesByStationTest() throws Exception {
+		when(alertsService.getPhonesByStation(anyInt())).thenReturn(any(PhoneDTO.class));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/phoneAlert")
+				.contentType(MediaType.APPLICATION_JSON)
+				.param("firestation", "2"))
+				.andExpect(status().isOk());
+
+	}
+
+	@Test
+	public void getEmailsByCityTest() throws Exception {
+		when(alertsService.getEmailsByCity(anyString())).thenReturn(any(CommunityEmailDTO.class));
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/communityEmail")
+				.contentType(MediaType.APPLICATION_JSON)
+				.param("city", "Culver"))
 				.andExpect(status().isOk());
 
 	}

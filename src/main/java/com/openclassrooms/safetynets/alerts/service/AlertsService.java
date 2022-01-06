@@ -11,12 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassrooms.safetynets.alerts.dto.ChildDTO;
+import com.openclassrooms.safetynets.alerts.dto.CommunityEmailDTO;
 import com.openclassrooms.safetynets.alerts.dto.FireDTO;
 import com.openclassrooms.safetynets.alerts.dto.FloodDTO;
 import com.openclassrooms.safetynets.alerts.dto.PersonDTO;
+import com.openclassrooms.safetynets.alerts.dto.PersonInfoDTO;
+import com.openclassrooms.safetynets.alerts.dto.PhoneDTO;
+import com.openclassrooms.safetynets.alerts.model.Child;
 import com.openclassrooms.safetynets.alerts.model.FireStation;
 import com.openclassrooms.safetynets.alerts.model.MedicalRecord;
 import com.openclassrooms.safetynets.alerts.model.Person;
+import com.openclassrooms.safetynets.alerts.model.PersonInfo;
 import com.openclassrooms.safetynets.alerts.repository.ReadJsonData;
 import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 
@@ -24,7 +30,7 @@ import com.openclassrooms.safetynets.alerts.util.AgeCalcul;
 public class AlertsService {
 	private Logger logger = LogManager.getLogger(AlertsService.class);
 	ObjectMapper mapper = new ObjectMapper();
-
+	private static int ADULT_AGE = 19;
 	@Autowired
 	private ReadJsonData dataStore;
 	@Autowired
@@ -69,7 +75,7 @@ public class AlertsService {
 					// age.
 					MedicalRecord med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
 							pers.getLastName());
-					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm/dd/yyyy");
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
 					LocalDate birthDate = LocalDate.parse(med.getBirthdate(), formatter);
 					int age = ageCalcul.getAge(birthDate);
 					if (age <= MAX_AGE_FOR_CHILD_ALERT) {
@@ -90,10 +96,10 @@ public class AlertsService {
 
 	}
 
-	public PersonDTO getPersonByIdentity(String firstName, String lastName) throws Exception {
+	public PersonInfoDTO getPersonByIdentity(String firstName, String lastName) throws Exception {
 		logger.debug("Inside AlertsService.getInfoByIdentity for : " + firstName, lastName);
 		List<Person> persons = personService.getPersonList();
-		List<Person> personsInfo = new ArrayList<>();
+		List<PersonInfo> personsInfo = new ArrayList<>();
 
 		// Loops the person list to detect persons with the given last name and
 		// calculates their age.
@@ -104,18 +110,18 @@ public class AlertsService {
 			if (pers.getLastName().equals(lastName)) {
 				MedicalRecord med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
 						pers.getLastName());
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm/dd/yyyy");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
 				LocalDate birthDate = LocalDate.parse(med.getBirthdate(), formatter);
 				int age = ageCalcul.getAge(birthDate);
 
 				// Create a "Person" object that contains specific data required of each person
 				// with the given last name and adds it to an ArrayList.
-				personsInfo.add(new Person(pers.getLastName(), pers.getAddress(),
+				personsInfo.add(new PersonInfo(pers.getLastName(), pers.getAddress(),
 						age, pers.getEmail(), med.getMedicationsList(), med.getAllergiesList()));
 			}
 		}
 
-		return new PersonDTO(personsInfo);
+		return new PersonInfoDTO(personsInfo);
 	}
 
 	public FireDTO getPersonsByAddress(String address) throws Exception {
@@ -128,11 +134,12 @@ public class AlertsService {
 
 			// Calculation of person's age by retrieving
 			// his medical record to obtain his date of birth.
+
 			MedicalRecord med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
 					pers.getLastName());
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm/dd/yyyy");
-			LocalDate birthdate = LocalDate.parse(med.getBirthdate(), formatter);
-			int age = ageCalcul.getAge(birthdate);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
+			LocalDate birthDate = LocalDate.parse(med.getBirthdate(), formatter);
+			int age = ageCalcul.getAge(birthDate);
 
 			// Create a "Person" object containing specific data required of each
 			// person living at a given address and add it to an ArrayList
@@ -192,6 +199,70 @@ public class AlertsService {
 		}
 
 		return new FloodDTO(householdsByStationDTO);
+	}
+
+	public ChildDTO getChildByAddress(String address) throws Exception {
+		logger.debug("Inside AlertsService.getChildByAddress for adress : " + address);
+		List<Person> personsByAddress = personService.getPersonsByAddress(address);
+		List<Child> childList = new ArrayList<>();
+		List<String> adultList = new ArrayList<>();
+
+		// Loops the person list to detect the persons with given last name and
+		// calculates their age.
+		for (Person pers : personsByAddress) {
+
+			// Determines if it's an adult or child by retrieving his medical record to
+			// obtain his date of birth.
+			MedicalRecord med = medicalRecordService.getMedicalRecordById(pers.getFirstName(),
+					pers.getLastName());
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
+			LocalDate birthDate = LocalDate.parse(med.getBirthdate(), formatter);
+			int age = ageCalcul.getAge(birthDate);
+
+			// Creates Child object that contains specific data required and it to a child
+			// list or adult list
+			// depending the age calculated.
+			if (age < ADULT_AGE) {
+				childList.add(new Child(pers.getFirstName(), pers.getLastName(), age));
+			} else {
+				adultList.add("FirstName : " + pers.getFirstName() + " LastName : " + pers.getLastName());
+			}
+		}
+
+		return new ChildDTO(childList, adultList);
+	}
+
+	public PhoneDTO getPhonesByStation(int station) throws Exception {
+		logger.debug("Inside AlertsService.getPhonesByStation for station : " + station);
+		List<Person> persons = personService.getPersonList();
+		// Retrieves addresses covered by the given station number
+		List<String> addresses = fireStationService.getAddressesByStation(station);
+		List<String> phones = new ArrayList<>();
+
+		// Loops the person list to find the persons living at these addresses to get
+		// their phone number and
+		// adds it to an ArrayList.
+		for (Person pers : persons) {
+			for (String address : addresses) {
+				if (pers.getAddress().equals(address)) {
+					phones.add(pers.getPhone());
+				}
+			}
+		}
+
+		return new PhoneDTO(phones);
+	}
+
+	public CommunityEmailDTO getEmailsByCity(String city) throws Exception {
+		logger.debug("Inside FireStation.getEmailsByCity method for city : " + city);
+		List<Person> personsByCity = personService.getPersonsByCity(city);
+		List<String> emails = new ArrayList<>();
+
+		for (Person person : personsByCity) {
+			emails.add(person.getEmail());
+		}
+
+		return new CommunityEmailDTO(emails);
 	}
 
 }

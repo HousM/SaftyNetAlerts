@@ -15,7 +15,6 @@ public class MedicalRecordService {
 	 * PersonRepository logger
 	 */
 	private Logger logger = LogManager.getLogger(MedicalRecordService.class);
-
 	/**
 	 * MedicalRecordRepository instance.
 	 */
@@ -73,4 +72,15 @@ public class MedicalRecordService {
 		return medicalRecord;
 	}
 
+//	public MedicalRecordDTO getMedicalRecordByIdentity(String firstName, String lastName) throws Exception {
+//		logger.debug("Inside MedicalRecordService.getMedicalRecordByID for {} {}",
+//				firstName, lastName);
+//		MedicalRecord medicalRecord = medicalRecordRepository.findByIdentity(firstName, lastName);
+//
+//		if (medicalRecord == null) {
+//			throw new Exception("Failed to get medicalRecord for : " + firstName + " " + lastName);
+//		}
+//
+//		return modelConverter.toMedicalRecordDTO(medicalRecord);
+//	}
 }
